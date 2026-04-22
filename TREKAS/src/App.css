@@ -1,0 +1,237 @@
+/* App.css */
+.app-container {
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reusable Buttons */
+.btn-white {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-yellow {
+  background-color: var(--primary-yellow);
+  color: #000000;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 20px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-yellow:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* Header */
+.header {
+  background-color: var(--primary-yellow);
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.logo {
+  height: 40px; /* Adjust based on your logo.png */
+  object-fit: contain;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: var(--primary-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  min-height: 400px;
+  position: relative;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.hero-image {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  .hero-image-container {
+    margin-top: 30px;
+    justify-content: center;
+  }
+}
+
+/* Products Section */
+.products-section {
+  background-color: #ffffff;
+  padding: 60px 5%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background-color: var(--primary-yellow);
+  border-radius: 16px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Recipes Section */
+.recipes-section {
+  display: flex;
+  min-height: 400px;
+}
+
+.recipes-placeholder {
+  flex: 1;
+  background-color: var(--bg-gray);
+}
+
+.recipes-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  padding: 40px 10%;
+  background-color: #ffffff;
+}
+
+.recipes-subtitle {
+  color: var(--text-gray);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.recipes-title {
+  color: var(--primary-yellow);
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.recipes-desc {
+  color: var(--text-gray);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 350px;
+}
+
+@media (max-width: 768px) {
+  .recipes-section {
+    flex-direction: column;
+  }
+  .recipes-placeholder {
+    min-height: 250px;
+  }
+  .recipes-content {
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary-yellow);
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.footer h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer h2 {
+    font-size: 2rem;
+  }
+}
