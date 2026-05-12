@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
-import logo from './assets/logo.png';
-import heroImg from './assets/hero.png';
-import imgOriginal from './assets/Original.png';
-import imgChia from './assets/OriginalSinChia.png';
-import imgHorneadas from './assets/Horneadas.png';
+import './App.css'
+import logo from './assets/img/logos/negro.png';
+import heroImg from './assets/img/logos/negro.png';
+import imgOriginal from './assets/img/productos/original.png';
+import imgChia from './assets/img/productos/chia.png';
+import imgHorneadas from './assets/img/productos/galletas.png';
 
 function App() {
   return (
