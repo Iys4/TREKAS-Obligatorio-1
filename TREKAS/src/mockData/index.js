@@ -33,4 +33,4 @@ export const DRIVER_PROFILE = {
     }
   ]
 };
-export const MOCK_CREDENTIALS = { email: "repartidor@trekas.com", password: "password123" };
+export const MOCK_CREDENTIALS = { email: "repartir", password: "repartir" };

@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-=======
 import React, { useState } from 'react';
->>>>>>> Stashed changes
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { Input } from '../../components/ui/Input';
 import { LOCATIONS } from '../../mockData';

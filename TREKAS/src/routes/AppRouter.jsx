@@ -21,15 +21,6 @@ export const AppRouter = ({
   return (
     <BrowserRouter>
       <Routes>
-<<<<<<< Updated upstream
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="/order/new" element={<PrivateRoute><NewOrder /></PrivateRoute>} />
-        <Route path="/order/summary" element={<PrivateRoute><OrderSummary /></PrivateRoute>} />
-        <Route path="/orders" element={<PrivateRoute><OrdersHistory /></PrivateRoute>} />
-        <Route path="/locations" element={<PrivateRoute><AllLocations /></PrivateRoute>} />
-        <Route path="/locations/:name" element={<PrivateRoute><LocationDetail /></PrivateRoute>} />
-=======
         <Route path="/login" element={<Login login={login} />} />
         
         <Route path="/" element={<PrivateRoute user={user}><Home user={user} logout={logout} /></PrivateRoute>} />
@@ -63,8 +54,6 @@ export const AppRouter = ({
             <LocationDetail ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
-        
->>>>>>> Stashed changes
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

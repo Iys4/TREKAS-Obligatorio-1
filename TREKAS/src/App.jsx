@@ -1,78 +1,92 @@
-import React, { useState } from 'react';
-import { AppRouter } from './routes/AppRouter';
-import { MOCK_CREDENTIALS, DRIVER_PROFILE } from './mockData';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
+import { useCart } from './hooks/useCart';
+import { useLocation } from './hooks/useLocation';
+import { useOrders } from './hooks/useOrders';
+
+// Importamos las pagimas acá
+import { Login } from './pages/auth/Login';
+import { Home } from './pages/main/Home';
+import { AllLocations } from './pages/main/AllLocations';
+import { LocationDetail } from './pages/main/LocationDetail';
+import { NewOrder } from './pages/order/NewOrder';
+import { OrderSummary } from './pages/order/OrderSummary';
+import { OrdersHistory } from './pages/order/OrdersHistory';
+
+//NO SE QUE HACE
+// Esta linea se fija si el user tiene hijos, si no tiene hijos es porque user esta vacio, entonces te manda a la pagina de login
+const PrivateRoute = ({ children, user }) => {
+  return user ? children : <Navigate to="/login" />;
+};
 
 function App() {
-  // --- Auth State ---
-  const [user, setUser] = useState(null);
-  
-  const login = (email, password) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === MOCK_CREDENTIALS.email && password === MOCK_CREDENTIALS.password) {
-          setUser({ email, name: 'Juan Pérez' }); resolve();
-        } else { reject(new Error('Credenciales inválidas')); }
-      }, 500);
-    });
-  };
-  const logout = () => setUser(null);
+  //Este es el hook que se inicializa cuando comienza la app, le dice a la app QUIEN esta logeado
+  //Llama a useAuth que es la funcion que nos devuelve el usuario
+  //Se llama al inicio porque es un componente con memoria, luego le envia esta memoria a los componentes
+  //que vamos a usar despues y precisan la info de quien es el usuario.
+  //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro
+  //Estan definidos dentro porque afectan la misma propiedad.
+  const { 
+    user,
+    login,
+    logout 
+  } = useAuth();
 
-  // --- Cart State ---
-  const [cart, setCart] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [ordersHistory, setOrdersHistory] = useState(DRIVER_PROFILE.history);
 
-  const addItem = (product, quantity) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.product.id === product.id);
-      if (existing) return prev.map(item => item.product.id === product.id ? { ...item, quantity } : item);
-      return [...prev, { product, quantity }];
-    });
-  };
+  // Hook del carrito, agrega y borra items del carrito, con memoria!
+  const { cart, addItem, clearCart, total } = useCart();
 
-  const removeItem = (productId) => setCart(prev => prev.filter(item => item.product.id !== productId));
-  
-  const clearCart = () => {
-    setCart([]);
-    setSelectedLocation(null);
-  };
+  // Hook de la ubicacion, guarda a que local vamos a entregar
+  const { selectedLocation, setSelectedLocation } = useLocation();
 
-  const confirmOrder = () => {
-    if (!selectedLocation || cart.length === 0) return;
-
-    const newOrder = {
-      id: `ORD-00${ordersHistory.length + 1}`,
-      date: new Date().toISOString().split('T')[0],
-      total: cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0),
-      status: 'EN CAMINO',
-      location: selectedLocation.name,
-      items: cart.map(item => ({
-        name: item.product.name,
-        quantity: item.quantity
-      }))
-    };
-
-    setOrdersHistory([newOrder, ...ordersHistory]);
-    clearCart();
-  };
-
-  const total = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+  // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
+  const { ordersHistory, confirmOrder } = useOrders({ cart, selectedLocation, total, clearCart });
 
   return (
-    <AppRouter 
-      user={user}
-      login={login}
-      logout={logout}
-      cart={cart}
-      addItem={addItem}
-      removeItem={removeItem}
-      clearCart={clearCart}
-      total={total}
-      selectedLocation={selectedLocation}
-      setSelectedLocation={setSelectedLocation}
-      ordersHistory={ordersHistory}
-      confirmOrder={confirmOrder}
-    />
+    <BrowserRouter>
+      <Routes>
+        {/* Rutas Públicas */}
+        <Route path="/login" element={<Login login={login} />} />
+        
+        {/* Rutas Privadas */}
+        <Route path="/" element={<PrivateRoute user={user}><Home user={user} logout={logout} /></PrivateRoute>} />
+        
+        <Route path="/order/new" element={
+          <PrivateRoute user={user}>
+            <NewOrder selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} cart={cart} addItem={addItem} />
+          </PrivateRoute>
+        } />
+        
+        <Route path="/order/summary" element={
+          <PrivateRoute user={user}>
+            <OrderSummary cart={cart} total={total} selectedLocation={selectedLocation} confirmOrder={confirmOrder} />
+          </PrivateRoute>
+        } />
+        
+        <Route path="/orders" element={
+          <PrivateRoute user={user}>
+            <OrdersHistory ordersHistory={ordersHistory} />
+          </PrivateRoute>
+        } />
+        
+        <Route path="/locations" element={
+          <PrivateRoute user={user}>
+            <AllLocations ordersHistory={ordersHistory} />
+          </PrivateRoute>
+        } />
+        
+        <Route path="/locations/:name" element={
+          <PrivateRoute user={user}>
+            <LocationDetail ordersHistory={ordersHistory} />
+          </PrivateRoute>
+        } />
+        
+        {/* Fallback si la ruta no existe */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
 export default App;
