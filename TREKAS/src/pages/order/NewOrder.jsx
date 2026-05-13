@@ -29,7 +29,7 @@ export const NewOrder = () => {
   );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="flex-col-full">
       <Header title={step===1 ? "Local" : "Productos"} showBack />
       <div className="screen-container">
         <Input 
@@ -41,28 +41,29 @@ export const NewOrder = () => {
         {step === 1 && filteredLocations.map(l => (
           <div key={l.id} 
                onClick={() => setSelectedLocation(l)}
-               style={{ padding: '16px', border: '2px solid', borderColor: selectedLocation?.id === l.id ? 'var(--primary)' : '#ccc', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer' }}>
-            <h3>{l.name}</h3><p>{l.address}</p>
+               className="card-interactive"
+               style={{ border: '2px solid', borderColor: selectedLocation?.id === l.id ? 'var(--primary)' : '#ccc' }}>
+            <h3 className="m-0">{l.name}</h3><p>{l.address}</p>
           </div>
         ))}
         
         {step === 2 && filteredProducts.map(p => (
-          <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', background: 'white', borderRadius: '8px', marginBottom: '12px', border: '1px solid #ccc' }}>
+          <div key={p.id} className="card flex-between mb-2">
             <div>
-              <h3>{p.name}</h3><p style={{color: 'var(--primary)', fontWeight: 'bold'}}>${p.price}</p>
+              <h3 className="m-0">{p.name}</h3><p className="text-primary text-bold m-0">${p.price}</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <button style={{width:'40px',height:'40px', background:'var(--primary)', color:'white', borderRadius:'8px', border:'none', cursor: 'pointer'}} onClick={()=>getQ(p.id)>0 && addItem(p, getQ(p.id)-1)}>-</button>
-              <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>{getQ(p.id)}</span>
-              <button style={{width:'40px',height:'40px', background:'var(--primary)', color:'white', borderRadius:'8px', border:'none', cursor: 'pointer'}} onClick={()=>addItem(p, getQ(p.id)+1)}>+</button>
+            <div className="flex-row-gap">
+              <button className="btn-stepper" onClick={()=>getQ(p.id)>0 && addItem(p, getQ(p.id)-1)}>-</button>
+              <span className="text-xl text-bold">{getQ(p.id)}</span>
+              <button className="btn-stepper" onClick={()=>addItem(p, getQ(p.id)+1)}>+</button>
             </div>
           </div>
         ))}
 
-        {step === 1 && filteredLocations.length === 0 && <p style={{textAlign: 'center', color: 'var(--text-muted)'}}>No se encontraron locales.</p>}
-        {step === 2 && filteredProducts.length === 0 && <p style={{textAlign: 'center', color: 'var(--text-muted)'}}>No se encontraron productos.</p>}
+        {step === 1 && filteredLocations.length === 0 && <p className="text-center text-muted">No se encontraron locales.</p>}
+        {step === 2 && filteredProducts.length === 0 && <p className="text-center text-muted">No se encontraron productos.</p>}
       </div>
-      <div style={{ padding: '16px', background: 'white', borderTop: '1px solid #ccc' }}>
+      <div className="footer-action">
         <PrimaryButton title="CONTINUAR" disabled={step===1 ? !selectedLocation : cart.length===0} onClick={() => { step===1 ? setStep(2) : nav('/order/summary') }} />
       </div>
     </div>

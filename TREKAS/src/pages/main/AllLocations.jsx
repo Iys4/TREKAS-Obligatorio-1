@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { Input } from '../../components/ui/Input';
 import { LOCATIONS } from '../../mockData';
@@ -7,6 +8,7 @@ import { CartContext } from '../../context/CartContext';
 export const AllLocations = () => {
   const { ordersHistory } = useContext(CartContext);
   const [search, setSearch] = useState('');
+  const nav = useNavigate();
 
   const filteredLocations = LOCATIONS.filter(l => 
     l.name.toLowerCase().includes(search.toLowerCase()) || 
@@ -18,7 +20,7 @@ export const AllLocations = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="flex-col-full">
       <Header title="Todos los Locales" showBack />
       
       <div className="screen-container">
@@ -28,44 +30,35 @@ export const AllLocations = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <div style={{ marginTop: '16px' }}>
+        <div className="mt-3">
           {filteredLocations.map(loc => {
             const orders = getOrdersForLocation(loc.name);
             const hasOrders = orders.length > 0;
 
             return (
-              <div key={loc.id} style={{ 
-                background: 'white', 
-                padding: '16px', 
-                borderRadius: '8px', 
-                marginBottom: '16px', 
-                border: '1px solid #ddd',
-                borderLeft: hasOrders ? '6px solid #4CAF50' : '1px solid #ddd'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h3 style={{ margin: 0 }}>{loc.name}</h3>
+              <div 
+                key={loc.id} 
+                onClick={() => nav(`/locations/${encodeURIComponent(loc.name)}`)}
+                className="card-interactive"
+                style={{ borderLeft: hasOrders ? '6px solid #4CAF50' : '1px solid #ddd' }}
+              >
+                <div className="flex-between">
+                  <h3 className="m-0">{loc.name}</h3>
                   {hasOrders && (
-                    <span style={{ 
-                      background: '#E8F5E9', 
-                      color: '#2E7D32', 
-                      fontSize: '0.7rem', 
-                      fontWeight: 'bold', 
-                      padding: '4px 8px', 
-                      borderRadius: '4px' 
-                    }}>
+                    <span className="badge badge-green">
                       {orders.length} PEDIDO(S)
                     </span>
                   )}
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '4px' }}>{loc.address}</p>
+                <p className="text-muted text-sm mt-2" style={{ marginTop: '4px' }}>{loc.address}</p>
                 
                 {hasOrders && (
-                  <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px dotted #eee' }}>
-                    <p style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#666', marginBottom: '8px' }}>ÚLTIMOS PEDIDOS:</p>
+                  <div className="mt-2 pt-2" style={{ borderTop: '1px dotted #eee', paddingTop: '12px' }}>
+                    <p className="text-xs-bold mb-1" style={{ color: '#666' }}>ÚLTIMOS PEDIDOS:</p>
                     {orders.slice(0, 3).map(order => (
-                      <div key={order.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                      <div key={order.id} className="item-row">
                         <span>{order.date}</span>
-                        <span style={{ fontWeight: 'bold' }}>${order.total}</span>
+                        <span className="text-bold">${order.total}</span>
                       </div>
                     ))}
                   </div>
@@ -75,7 +68,7 @@ export const AllLocations = () => {
           })}
 
           {filteredLocations.length === 0 && (
-            <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginTop: '24px' }}>
+            <p className="text-center text-muted mt-4">
               No se encontraron locales.
             </p>
           )}

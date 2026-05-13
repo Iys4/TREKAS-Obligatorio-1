@@ -8,35 +8,28 @@ export const OrdersHistory = () => {
   const { ordersHistory } = useContext(CartContext);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="flex-col-full">
       <Header title="Mis Pedidos" showBack />
       
       <div className="screen-container">
         {/* Métricas del Repartidor */}
-        <div style={{ 
-          background: 'white', 
-          padding: '20px', 
-          borderRadius: '8px', 
-          marginBottom: '24px', 
-          border: '1px solid #ddd',
-          textAlign: 'center'
-        }}>
-          <h2 style={{ color: 'var(--primary)', marginBottom: '16px' }}>{DRIVER_PROFILE.name}</h2>
+        <div className="card card-padded text-center">
+          <h2 className="text-primary mb-3">{DRIVER_PROFILE.name}</h2>
           
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div className="flex-around stats-container">
             <div>
-              <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>{DRIVER_PROFILE.hoursWorked}</p>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>Horas Trabajadas</p>
+              <p className="text-xxl text-bold m-0">{DRIVER_PROFILE.hoursWorked}</p>
+              <p className="text-xs text-muted m-0">Horas Trabajadas</p>
             </div>
-            <div style={{ width: '1px', background: '#eee' }}></div>
+            <div className="stat-divider"></div>
             <div>
-              <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>{ordersHistory.length}</p>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>Envíos Realizados</p>
+              <p className="text-xxl text-bold m-0">{ordersHistory.length}</p>
+              <p className="text-xs text-muted m-0">Envíos Realizados</p>
             </div>
           </div>
         </div>
 
-        <h2 style={{ marginBottom: '16px', fontSize: '1.2rem' }}>Historial</h2>
+        <h2 className="text-xl mb-3">Historial</h2>
         
         {ordersHistory.map(order => (
           <OrderCard key={order.id} order={order} />

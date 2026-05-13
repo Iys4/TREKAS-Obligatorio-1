@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Login } from '../pages/auth/Login';
 import { Home } from '../pages/main/Home';
 import { AllLocations } from '../pages/main/AllLocations';
+import { LocationDetail } from '../pages/main/LocationDetail';
 import { NewOrder } from '../pages/order/NewOrder';
 import { OrderSummary } from '../pages/order/OrderSummary';
 import { OrdersHistory } from '../pages/order/OrdersHistory';
@@ -23,6 +24,7 @@ export const AppRouter = () => {
         <Route path="/order/summary" element={<PrivateRoute><OrderSummary /></PrivateRoute>} />
         <Route path="/orders" element={<PrivateRoute><OrdersHistory /></PrivateRoute>} />
         <Route path="/locations" element={<PrivateRoute><AllLocations /></PrivateRoute>} />
+        <Route path="/locations/:name" element={<PrivateRoute><LocationDetail /></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

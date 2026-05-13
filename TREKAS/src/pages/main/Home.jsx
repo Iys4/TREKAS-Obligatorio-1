@@ -9,14 +9,14 @@ export const Home = () => {
   const nav = useNavigate();
   return (
     <div className="screen-container">
-      <h2 style={{ marginBottom: '24px' }}>Hola, {user?.name}</h2>
-      <div style={{ height: '150px', background: '#e0e0e0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+      <h2 className="mb-4">Hola, {user?.name}</h2>
+      <div className="map-placeholder mb-4">
         <strong>[ MAPA ZONA ]</strong>
       </div>
       <PrimaryButton title="NUEVO PEDIDO" onClick={() => nav('/order/new')} />
       <PrimaryButton title="MI PERFIL" outline onClick={() => nav('/orders')} />
       <PrimaryButton title="VER TODOS LOS LOCALES" outline onClick={() => nav('/locations')} />
-      <PrimaryButton title="CERRAR SESIÓN" outline onClick={logout} style={{ borderColor: 'red', color: 'red' }} />
+      <PrimaryButton title="CERRAR SESIÓN" outline onClick={logout} style={{ borderColor: 'var(--error)', color: 'var(--error)' }} />
     </div>
   );
 };
