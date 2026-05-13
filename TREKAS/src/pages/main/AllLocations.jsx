@@ -1,12 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+=======
+import React, { useState } from 'react';
+>>>>>>> Stashed changes
 import { Header } from '../../components/layout/Header';
 import { Input } from '../../components/ui/Input';
 import { LOCATIONS } from '../../mockData';
-import { CartContext } from '../../context/CartContext';
 
-export const AllLocations = () => {
-  const { ordersHistory } = useContext(CartContext);
+export const AllLocations = ({ ordersHistory }) => {
   const [search, setSearch] = useState('');
   const nav = useNavigate();
 

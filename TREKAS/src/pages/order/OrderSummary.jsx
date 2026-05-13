@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
-import { CartContext } from '../../context/CartContext';
 
-export const OrderSummary = () => {
-  const { cart, total, selectedLocation, confirmOrder } = useContext(CartContext);
+export const OrderSummary = ({ cart, total, selectedLocation, confirmOrder }) => {
   const nav = useNavigate();
 
   const handleConfirm = () => {

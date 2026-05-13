@@ -1,13 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Input } from '../../components/ui/Input';
 import { LOCATIONS, PRODUCTS } from '../../mockData';
-import { CartContext } from '../../context/CartContext';
 
-export const NewOrder = () => {
-  const { selectedLocation, setSelectedLocation, cart, addItem } = useContext(CartContext);
+export const NewOrder = ({ selectedLocation, setSelectedLocation, cart, addItem }) => {
   const nav = useNavigate();
   const [step, setStep] = useState(1);
   const [search, setSearch] = useState('');

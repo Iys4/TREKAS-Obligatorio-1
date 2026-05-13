@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 import { Input } from '../../components/ui/Input';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
-export const Login = () => {
-  const { login } = useContext(AuthContext);
+export const Login = ({ login }) => {
   const nav = useNavigate();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
@@ -8,6 +9,16 @@ import { LOCATIONS } from '../../mockData';
 export const LocationDetail = () => {
   const { name } = useParams();
   const { ordersHistory } = useContext(CartContext);
+=======
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Header } from '../../components/layout/Header';
+import { OrderCard } from '../../components/ui/OrderCard';
+import { LOCATIONS } from '../../mockData';
+
+export const LocationDetail = ({ ordersHistory = [] }) => {
+  const { name } = useParams();
+>>>>>>> Stashed changes
   
   // Decodificar el nombre de la URL
   const locationName = decodeURIComponent(name);

@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Header } from '../../components/layout/Header';
 import { DRIVER_PROFILE } from '../../mockData';
 import { OrderCard } from '../../components/ui/OrderCard';
-import { CartContext } from '../../context/CartContext';
 
-export const OrdersHistory = () => {
-  const { ordersHistory } = useContext(CartContext);
+export const OrdersHistory = ({ ordersHistory }) => {
 
   return (
     <div className="flex-col-full">

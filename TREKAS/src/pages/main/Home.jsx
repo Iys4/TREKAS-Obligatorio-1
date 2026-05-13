@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import { PRODUCTS } from '../../mockData';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
-export const Home = () => {
-  const { user, logout } = useContext(AuthContext);
+export const Home = ({ user, logout }) => {
   const nav = useNavigate();
   return (
     <div className="screen-container">
