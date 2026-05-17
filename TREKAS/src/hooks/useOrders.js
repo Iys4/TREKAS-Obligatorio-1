@@ -1,7 +1,10 @@
+//La funcion se lanza cuando inicia la app, esa informacion queda guardada en el historial, que ahora mismo no es una base de datos real sino un estado local
+
 import { useState } from 'react';
 import { DRIVER_PROFILE } from '../mockData';
 
-
+//Toma datos de la base de datos (los productos)
+// Toma los datos que le enviamos cuando se llama la funcion que son cart, locacion, el total de precio y ellama la funcion de eliminar el carro.
 export const useOrders = ({ cart, selectedLocation, total, clearCart }) => {
   const [ordersHistory, setOrdersHistory] = useState(DRIVER_PROFILE.history);
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 // Hook que maneja unicamente el carrito de productos y el total
 export const useCart = () => {
-  //guarda el carrito en un use state
+  //guarda el carrito en un use state para que no se borre
   const [cart, setCart] = useState([]);
 
   // Si el producto ya esta en el carrito actualiza su cantidad; si no, lo agrega

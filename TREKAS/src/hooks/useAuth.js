@@ -9,6 +9,7 @@ export const useAuth = () => {
     try {
       //Se fija si lo que ingresamos como userData es igual que lo que esta en nuestra "base de datos" 
       //En el futuro tenemos que cambiar esta linea
+      //LoginService mira la base de datos y nos devuelve si esta correcto o no
       const userData = await loginService(email, password);
       setUser(userData);
       return userData;
@@ -16,7 +17,7 @@ export const useAuth = () => {
       throw error;
     }
   };
-//Si apretas el boton de logout borra al usuario
+//Si apretas el boton de logout borra el usuario de la memoria
   const logout = () => setUser(null);
 
   return {

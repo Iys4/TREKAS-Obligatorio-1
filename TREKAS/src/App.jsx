@@ -16,6 +16,7 @@ import { OrdersHistory } from './pages/order/OrdersHistory';
 
 //NO SE QUE HACE
 // Esta linea se fija si el user tiene hijos, si no tiene hijos es porque user esta vacio, entonces te manda a la pagina de login
+//Solo se activa esta linea si la ruta es privada y uno quiere entrar sin tener una cuenta iniciada
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;
 };
@@ -34,55 +35,71 @@ function App() {
   } = useAuth();
 
 
-  // Hook del carrito, agrega y borra items del carrito, con memoria!
+  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de useOrders, con memoria!
   const { cart, addItem, clearCart, total } = useCart();
 
-  // Hook de la ubicacion, guarda a que local vamos a entregar
+  // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
+  //Empieza valiendo null
+  //
   const { selectedLocation, setSelectedLocation } = useLocation();
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
   const { ordersHistory, confirmOrder } = useOrders({ cart, selectedLocation, total, clearCart });
 
   return (
+    //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.
     <BrowserRouter>
       <Routes>
-        {/* Rutas Públicas */}
-        <Route path="/login" element={<Login login={login} />} />
+        {/* Rutas de login */}
+        <Route path="/login" element={
+          <Login login={login} />
+          } />
         
-        {/* Rutas Privadas */}
-        <Route path="/" element={<PrivateRoute user={user}><Home user={user} logout={logout} /></PrivateRoute>} />
-        
+        <Route path="/" 
+        element={<PrivateRoute 
+        user={user}>
+          <Home user={user} logout={logout} />
+          </PrivateRoute>} />
+        {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a useLocation*/}
         <Route path="/order/new" element={
           <PrivateRoute user={user}>
-            <NewOrder selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} cart={cart} addItem={addItem} />
+            <NewOrder selectedLocation={selectedLocation} 
+            setSelectedLocation={setSelectedLocation} 
+            cart={cart} 
+            addItem={addItem} />
           </PrivateRoute>
         } />
-        
+        {/* Resumen del pedido tomando los items que estan en la memoria*/}
         <Route path="/order/summary" element={
           <PrivateRoute user={user}>
-            <OrderSummary cart={cart} total={total} selectedLocation={selectedLocation} confirmOrder={confirmOrder} />
+            <OrderSummary 
+            cart={cart} 
+            total={total} 
+            selectedLocation={selectedLocation} 
+            confirmOrder={confirmOrder} />
           </PrivateRoute>
         } />
         
         <Route path="/orders" element={
           <PrivateRoute user={user}>
-            <OrdersHistory ordersHistory={ordersHistory} />
+            <OrdersHistory 
+            ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
         
         <Route path="/locations" element={
           <PrivateRoute user={user}>
-            <AllLocations ordersHistory={ordersHistory} />
+            <AllLocations 
+            ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
         
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
-            <LocationDetail ordersHistory={ordersHistory} />
+            <LocationDetail 
+            ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
-        
-        {/* Fallback si la ruta no existe */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
