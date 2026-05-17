@@ -1,38 +1,38 @@
 export const PRODUCTS = [
-  { id: 1, name: "TREKAS Tradicional", description: "Clásicas tostadas", price: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=TRADICIONAL" },
-  { id: 2, name: "TREKAS Chía", description: "Con semillas de chía", price: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=CHIA" },
-  { id: 3, name: "TREKAS Horneadas", description: "Extra crujientes", price: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=HORNEADAS" }
+  { id: 1, name: "TREKAS Tradicional", description: "Clásicas tostadas", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=TRADICIONAL" },
+  { id: 2, name: "TREKAS Chía", description: "Con semillas de chía", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=CHIA" },
+  { id: 3, name: "TREKAS Horneadas", description: "Extra crujientes", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=HORNEADAS" }
 ];
-export const LOCATIONS = [
+export const LOCALES = [
   { id: 1, name: "Kiosco El Sol", address: "Av. Siempre Viva 123" },
   { id: 2, name: "Supermercado Día", address: "Calle Falsa 456" }
 ];
-export const DRIVER_PROFILE = {
-  name: "Juan Pérez", hoursWorked: 32, deliveriesCount: 14,
+export const PERFIL_CONDUCTOR = {
+  name: "Juan Pérez", horasTrabajadas: 32, deliveriesCount: 14,
   history: [
-    { 
-      id: 'ORD-001', 
-      date: '2026-05-10', 
-      total: 4800, 
-      status: 'ENTREGADO', 
+    {
+      id: 'ORD-001',
+      date: '2026-05-10',
+      total: 4800,
+      status: 'ENTREGADO',
       location: 'Kiosco El Sol',
-      driverEmail: 'repartir@gmail.com',
+      emailConductor: 'repartir@gmail.com',
       items: [
-        { name: 'TREKAS Tradicional', quantity: 20 },
-        { name: 'TREKAS Chía', quantity: 15 }
+        { name: 'TREKAS Tradicional', cantidad: 20 },
+        { name: 'TREKAS Chía', cantidad: 15 }
       ]
     },
-    { 
-      id: 'ORD-002', 
-      date: '2026-05-12', 
-      total: 2700, 
-      status: 'EN CAMINO', 
+    {
+      id: 'ORD-002',
+      date: '2026-05-12',
+      total: 2700,
+      status: 'EN CAMINO',
       location: 'Supermercado Día',
-      driverEmail: 'repartir@gmail.com',
+      emailConductor: 'repartir@gmail.com',
       items: [
-        { name: 'TREKAS Horneadas', quantity: 30 }
+        { name: 'TREKAS Horneadas', cantidad: 30 }
       ]
     }
   ]
 };
-export const MOCK_CREDENTIALS = { email: "repartir@gmail.com", password: "repartir" };
+export const MOCK_CREDENTIALS = { email: "repartir@gmail.com", contraseña: "repartir" };

@@ -1,35 +1,35 @@
 //Importa los componentes de UI (como input) de la carpeta de UI
 //Esta pagina tiene los componentes de la pantalla de login
 import React from 'react';
-//useLoginForm es la logica del login
-import { useLoginForm } from '../../hooks/useLoginForm';
-import { Input } from '../../components/ui/Input';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
-import { AuthContainer } from '../../components/ui/AuthContainer';
-import { AuthHeader } from '../../components/ui/AuthHeader';
+//usarFormularioDeLogin es la logica del login
+import { usarFormularioDeLogin } from '../../hooks/usarFormularioDeLogin';
+import { InputUI } from '../../components/ui/InputUI';
+import { BotonPrincipalUI } from '../../components/ui/BotonPrincipalUI';
+import { ContenedorAuthUI } from '../../components/ui/ContenedorAuthUI';
+import { HeaderAuthUI } from '../../components/ui/HeaderAuthUI';
 
-//Llama a useLoginForm y le pide que la informacion que necesita mostrarle al usuario ademas de llamar a la autorizacion necesaria en authservice.
+//Llama a usarFormularioDeLogin y le pide que la informacion que necesita mostrarle al usuario ademas de llamar a la autorizacion necesaria en authservice.
 export const Login = ({ login }) => {
   const {
     email,
-    setEmail,
+    actualizarEmail,
     pass,
-    setPass,
+    actualizarContraseña,
     error,
-    handleLogin,
+    erroresLogin,
     navigateToRegister,
-  } = useLoginForm({ login });
+  } = usarFormularioDeLogin({ login });
 
-//Este es el HTML que se va a mostrar en la pagina, con el control de comportamiento que se usa en useLoginForm
+  //Este es el HTML que se va a mostrar en la pagina, con el control de comportamiento que se usa en usarFormularioDeLogin
   return (
-    <AuthContainer>
-      <AuthHeader title="TREKAS Delivery" subtitle="Ingreso Operarios" />
-      <Input label="Email" type="email" value={email} onChange={e=>setEmail(e.target.value)} />
-      <Input label="Contraseña" type="password" value={pass} onChange={e=>setPass(e.target.value)} error={error} />
+    <ContenedorAuthUI>
+      <HeaderAuthUI title="TREKAS Delivery" subtitle="Ingreso Operarios" />
+      <InputUI label="Email" type="email" value={email} onChange={e => actualizarEmail(e.target.value)} />
+      <InputUI label="Contraseña" type="contraseña" value={pass} onChange={e => actualizarContraseña(e.target.value)} error={error} />
       <div className="mb-4"></div>
-      {/* Llama a handleLogin en useLoginForm y luego inicia el proceso de autorizacion */}
-      <PrimaryButton title="INGRESAR" onClick={handleLogin} />
-      <PrimaryButton title="REGISTRARSE" outline onClick={navigateToRegister} />
-    </AuthContainer>
+      {/* Llama a erroresLogin en usarFormularioDeLogin y luego inicia el proceso de autorizacion */}
+      <BotonPrincipalUI title="INGRESAR" onClick={erroresLogin} />
+      <BotonPrincipalUI title="REGISTRARSE" outline onClick={navigateToRegister} />
+    </ContenedorAuthUI>
   );
-};
+};

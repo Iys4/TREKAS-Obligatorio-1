@@ -1,0 +1,25 @@
+import { useNavigate } from 'react-router-dom';
+
+export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionado }) => {
+  const nav = useNavigate();
+
+  // Le envia esto a VerPedidos para que sepa rapidamente si el carrito esta vacio o se deselecciono la locacion, es para casos fringe
+  const isEmpty = !localSeleccionado || !carrito || carrito.length === 0;
+
+  // Es la funcion que se envia cuando apretas CONFIRMAR PEDIDO, te devuelve a la pantalla principal "/" y lanza confirmarOrden para que quede guardada la memoria en la base de datos
+  const confirmadorDePedidos = () => {
+    if (confirmarOrden) confirmarOrden();
+    nav('/');
+  };
+
+  // Manejador para volver a la pantalla de nuevo pedido cuando se quiere ir para atras
+  const irAtrasResumenDePedidos = () => {
+    nav('/pedido/new');
+  };
+
+  return {
+    isEmpty,
+    confirmadorDePedidos,
+    irAtrasResumenDePedidos,
+  };
+};

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Header } from '../layout/Header';
-import { PrimaryButton } from '../ui/PrimaryButton';
-import { Input } from '../ui/Input';
+import { BotonPrincipalUI } from '../ui/BotonPrincipalUI';
+import { InputUI } from '../ui/InputUI';
 import { PRODUCTS } from '../../mockData';
 
 //Este componente es donde ingresamos los items que queremos pedir.
 
-//Cart, es el carrito que toma de la memoria
+//carrito, es el carrito que toma de la memoria
 //agregarItem, funcion que agrega o elimina items del carrito
 //onNext, la funcion del boton CONTINUAR
 //onBack, la funcion del boton VOLVER, que envia el contador en NewOrder para atras 
-export const SelectProductsStep = ({ cart, agregarItem, onNext, onBack }) => {
+export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack }) => {
 
 
-  const [search, setSearch] = useState('');
+  const [search, actualizarInput] = useState('');
 
   //getQ es una funcion que lee cuantas de una id tiene el carrito
-  const getQ = id => cart.find(i => i.product.id === id)?.quantity || 0;
+  const getQ = id => carrito.find(i => i.producto.id === id)?.cantidad || 0;
 
   //Filtro para buscar el producto en nuestra lista de productos para luego renderizarlos, ahora mismo no tiene mucho uso porque solo hay 3 productos pero si agregamos mas productos va a ser util
   const filteredProducts = PRODUCTS.filter(p =>
@@ -28,16 +28,16 @@ export const SelectProductsStep = ({ cart, agregarItem, onNext, onBack }) => {
     <div className="flex-col-full">
       <Header title="Productos" showBack onBack={onBack} />
       <div className="screen-container">
-        <Input
+        <InputUI
           placeholder="Buscar producto..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => actualizarInput(e.target.value)}
         />
 
         {filteredProducts.map(p => (
           <div key={p.id} className="card flex-between mb-2">
             <div>
-              <h3 className="m-0">{p.name}</h3><p className="text-primary text-bold m-0">${p.price}</p>
+              <h3 className="m-0">{p.name}</h3><p className="text-primary text-bold m-0">${p.precio}</p>
             </div>
             <div className="flex-row-gap">
               {/* Botones para agregar o reducir numero de items en la lista en memoria. si tenes 0 no se envia la funcion, si tiene mas de 0
@@ -56,7 +56,7 @@ export const SelectProductsStep = ({ cart, agregarItem, onNext, onBack }) => {
       </div>
       <div className="footer-action">
         {/* Si el carrito esta vacio no te deja avanzar*/}
-        <PrimaryButton title="CONTINUAR" disabled={cart.length === 0} onClick={onNext} />
+        <BotonPrincipalUI title="CONTINUAR" disabled={carrito.length === 0} onClick={onNext} />
       </div>
     </div>
   );

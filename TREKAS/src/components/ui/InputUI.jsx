@@ -1,5 +1,6 @@
 import React from 'react';
-export const Input = ({ label, error, ...props }) => (
+
+export const InputUI = ({ label, error, ...props }) => (
   <div className="input-group">
     {label && <label>{label}</label>}
     <input className={error ? 'error' : ''} {...props} />

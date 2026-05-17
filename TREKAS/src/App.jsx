@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
+import { enviarAuth } from './hooks/enviarAuth';
 import { usarCarrito } from './hooks/usarCarrito';
-import { useLocation } from './hooks/useLocation';
-import { useOrders } from './hooks/useOrders';
+import { hookLocacion } from './hooks/hookLocacion';
+import { usarPedidosNuevos } from './hooks/usarPedidosNuevos';
 
 // Importamos las pagimas acá
 import { Login } from './pages/auth/Login';
 import { Home } from './pages/main/Home';
-import { AllLocations } from './pages/main/AllLocations';
-import { LocationDetail } from './pages/main/LocationDetail';
+import { TodosLosLocales } from './pages/main/TodosLosLocales';
+import { DetalleDeLocal } from './pages/main/DetalleDeLocal';
 import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido';
-import { OrderSummary } from './pages/order/OrderSummary';
+import { VerPedidos } from './pages/order/VerPedidos';
 import { OrdersHistory } from './pages/order/OrdersHistory';
 
 //NO SE QUE HACE
@@ -23,7 +23,7 @@ const PrivateRoute = ({ children, user }) => {
 
 function App() {
   //Este es el hook que se inicializa cuando comienza la app, le dice a la app QUIEN esta logeado
-  //Llama a useAuth que es la funcion que nos devuelve el usuario
+  //Llama a enviarAuth que es la funcion que nos devuelve el usuario
   //Se llama al inicio porque es un componente con memoria, luego le envia esta memoria a los componentes
   //que vamos a usar despues y precisan la info de quien es el usuario.
   //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro
@@ -32,19 +32,19 @@ function App() {
     user,
     login,
     logout
-  } = useAuth();
+  } = enviarAuth();
 
 
-  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de useOrders, con memoria!
-  const { cart, agregarItem, limpiarCarrito, total } = usarCarrito();
+  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
+  const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito();
 
   // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
   //Empieza valiendo null
   //
-  const { selectedLocation, establecerLocacion } = useLocation();
+  const { localSeleccionado, establecerLocacion } = hookLocacion();
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
-  const { ordersHistory, confirmOrder } = useOrders({ user, cart, selectedLocation, total, limpiarCarrito });
+  const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
 
   return (
     //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.
@@ -61,48 +61,48 @@ function App() {
             user={user}>
             <Home user={user} logout={logout} />
           </PrivateRoute>} />
-        {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a useLocation*/}
-        <Route path="/order/new" element={
+        {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a hookLocacion*/}
+        <Route path="/pedido/new" element={
           <PrivateRoute user={user}>
-            <ElectorDeMenuNuevoPedido selectedLocation={selectedLocation}
+            <ElectorDeMenuNuevoPedido localSeleccionado={localSeleccionado}
               establecerLocacion={establecerLocacion}
-              cart={cart}
+              carrito={carrito}
               agregarItem={agregarItem} />
           </PrivateRoute>
         } />
-        {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia useOrders y confirmar pedido*/}
-        <Route path="/order/summary" element={
+        {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia usarPedidosNuevos y confirmar pedido*/}
+        <Route path="/pedido/summary" element={
           <PrivateRoute user={user}>
 
-            <OrderSummary
-              cart={cart}
+            <VerPedidos
+              carrito={carrito}
               total={total}
-              selectedLocation={selectedLocation}
-              confirmOrder={confirmOrder} />
+              localSeleccionado={localSeleccionado}
+              confirmarOrden={confirmarOrden} />
           </PrivateRoute>
         } />
         {/* Pagina de historial de pedidos, no envia nada y nos muestra lo que hay en la base de datos.*/}
-        <Route path="/orders" element={
+        <Route path="/pedidos" element={
           <PrivateRoute user={user}>
             <OrdersHistory
               user={user}
-              ordersHistory={ordersHistory} />
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         {/* Pagina que nos muestra todos los locales a los que enviamos cosas, se puede clickear en el local para ver los envios hechos*/}
         <Route path="/locations" element={
           <PrivateRoute user={user}>
-            <AllLocations
-              ordersHistory={ordersHistory} />
+            <TodosLosLocales
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         {/* Ruta que nos muestra el detalle de los pedidos que historicamente hizo el local*/}
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
-            <LocationDetail
-              ordersHistory={ordersHistory} />
+            <DetalleDeLocal
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />

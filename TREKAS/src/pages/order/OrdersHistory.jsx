@@ -1,27 +1,29 @@
 import React from 'react';
 import { ScreenLayout } from '../../components/layout/ScreenLayout';
-import { DRIVER_PROFILE } from '../../mockData';
-import { OrderCard } from '../../components/ui/OrderCard';
-import { DriverStatsCard } from '../../components/ui/DriverStatsCard';
-import { SectionTitle } from '../../components/ui/SectionTitle';
+import { PERFIL_CONDUCTOR } from '../../mockData';
+import { CartaPedidoUI } from '../../components/ui/CartaPedidoUI';
+import { DescripcionConductorUI } from '../../components/ui/DescripcionConductorUI';
+import { TitulosDeSeccionUI } from '../../components/ui/TitulosDeSeccionUI';
 
-export const OrdersHistory = ({ user, ordersHistory }) => {
+//Esta pagina nos muestra la informacion del usuario, en el caso de test nos muestra a todos los pedidos de la lista de pedidos
+
+export const OrdersHistory = ({ user, historialDeOrdenes }) => {
   // Filtramos para obtener solo los pedidos del usuario actualmente conectado
-  const driverOrders = ordersHistory.filter(order => order.driverEmail === user?.email);
+  const pedidosHechos = historialDeOrdenes.filter(pedido => pedido.emailConductor === user?.email);
 
   return (
     <ScreenLayout title="Mis Pedidos" showBack>
       {/* Nos muestra las metricas del conductor actual */}
-      <DriverStatsCard 
-        name={user?.name || DRIVER_PROFILE.name}
-        hoursWorked={DRIVER_PROFILE.hoursWorked}
-        ordersCount={driverOrders.length}
+      <DescripcionConductorUI
+        name={user?.name || PERFIL_CONDUCTOR.name}
+        horasTrabajadas={PERFIL_CONDUCTOR.horasTrabajadas}
+        numeroDeOrdenes={pedidosHechos.length}
       />
       {/* Carga el historial de pedidos que hizo el conductor especifico */}
-      <SectionTitle title="Historial" />
-      
-      {driverOrders.map(order => (
-        <OrderCard key={order.id} order={order} />
+      <TitulosDeSeccionUI title="Historial" />
+
+      {pedidosHechos.map(pedido => (
+        <CartaPedidoUI key={pedido.id} pedido={pedido} />
       ))}
     </ScreenLayout>
   );

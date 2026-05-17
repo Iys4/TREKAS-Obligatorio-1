@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from '../pages/auth/Login';
 import { Home } from '../pages/main/Home';
-import { AllLocations } from '../pages/main/AllLocations';
-import { LocationDetail } from '../pages/main/LocationDetail';
-import { ElectorDeMenuNuevoPedido } from '../pages/order/ElectorDeMenuNuevoPedido';
-import { OrderSummary } from '../pages/order/OrderSummary';
-import { OrdersHistory } from '../pages/order/OrdersHistory';
+import { TodosLosLocales } from '../pages/main/TodosLosLocales';
+import { DetalleDeLocal } from '../pages/main/DetalleDeLocal';
+import { ElectorDeMenuNuevoPedido } from '../pages/pedido/ElectorDeMenuNuevoPedido';
+import { VerPedidos } from '../pages/pedido/VerPedidos';
+import { OrdersHistory } from '../pages/pedido/OrdersHistory';
 
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;
@@ -14,44 +14,57 @@ const PrivateRoute = ({ children, user }) => {
 
 export const AppRouter = ({
   user, login, logout,
-  cart, agregarItem, removeItem, limpiarCarrito, total,
-  selectedLocation, establecerLocacion,
-  ordersHistory, confirmOrder
+  carrito, agregarItem, removeItem, limpiarCarrito, total,
+  localSeleccionado, establecerLocacion,
+  historialDeOrdenes, confirmarOrden
 }) => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login login={login} />} />
 
-        <Route path="/" element={<PrivateRoute user={user}><Home user={user} logout={logout} /></PrivateRoute>} />
+        <Route path="/" element={<PrivateRoute 
+        user={user}>
+          <Home user={user} logout={logout} /></PrivateRoute>} />
 
-        <Route path="/order/new" element={
+        <Route path="/pedido/new" element={
           <PrivateRoute user={user}>
-            <ElectorDeMenuNuevoPedido selectedLocation={selectedLocation} establecerLocacion={establecerLocacion} cart={cart} agregarItem={agregarItem} />
+            <ElectorDeMenuNuevoPedido 
+            localSeleccionado={localSeleccionado} 
+            establecerLocacion={establecerLocacion} 
+            carrito={carrito} 
+            agregarItem={agregarItem} />
           </PrivateRoute>
         } />
 
-        <Route path="/order/summary" element={
+        <Route path="/pedido/summary" element={
           <PrivateRoute user={user}>
-            <OrderSummary cart={cart} total={total} selectedLocation={selectedLocation} confirmOrder={confirmOrder} />
+            <VerPedidos 
+            carrito={carrito} 
+            total={total} 
+            localSeleccionado={localSeleccionado} 
+            confirmarOrden={confirmarOrden} />
           </PrivateRoute>
         } />
 
-        <Route path="/orders" element={
+        <Route path="/pedidos" element={
           <PrivateRoute user={user}>
-            <OrdersHistory ordersHistory={ordersHistory} />
+            <OrdersHistory 
+            historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         <Route path="/locations" element={
           <PrivateRoute user={user}>
-            <AllLocations ordersHistory={ordersHistory} />
+            <TodosLosLocales 
+            historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
-            <LocationDetail ordersHistory={ordersHistory} />
+            <DetalleDeLocal 
+            historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />
