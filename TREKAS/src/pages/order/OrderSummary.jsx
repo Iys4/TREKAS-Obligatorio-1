@@ -1,60 +1,60 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Header } from '../../components/layout/Header';
+import { ScreenLayout } from '../../components/layout/ScreenLayout';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { Card } from '../../components/ui/Card';
+import { SummaryItemRow } from '../../components/ui/SummaryItemRow';
+import { TotalSummaryRow } from '../../components/ui/TotalSummaryRow';
+import { useOrderSummary } from '../../hooks/useOrderSummary';
 
+// Esta es la pagina donde vemos el resumen del pedido
+// Le manda los props que recibe de App.jsx a useOrderSummary
 export const OrderSummary = ({ cart, total, selectedLocation, confirmOrder }) => {
-  const nav = useNavigate();
+  const {
+    isEmpty,
+    handleConfirm,
+    navigateToNewOrder,
+  } = useOrderSummary({ confirmOrder, cart, selectedLocation });
 
-  const handleConfirm = () => {
-    confirmOrder();
-    nav('/');
-  };
-
-  if (!selectedLocation || cart.length === 0) {
+  // Handle de que pasa si el carrito esta vacio, en teoria no deberia pasar porque no podes avanzar a esta pagina con el carrito vacio
+  if (isEmpty) {
     return (
-      <div className="flex-col-full">
-        <Header title="Resumen" showBack />
-        <div className="screen-container text-center">
+      <ScreenLayout title="Resumen" showBack>
+        <div className="text-center">
           <p>No hay productos en el carrito o no se seleccionó un local.</p>
-          <PrimaryButton title="VOLVER" onClick={() => nav('/order/new')} />
+          <PrimaryButton title="VOLVER" onClick={navigateToNewOrder} />
         </div>
-      </div>
+      </ScreenLayout>
     );
   }
 
+  // La parte visual del sistema
   return (
-    <div className="flex-col-full">
-      <Header title="Resumen de Pedido" showBack />
-      <div className="screen-container">
-        <div className="card mb-4">
-          <h2 className="text-primary mb-1">Destino</h2>
-          <p className="text-lg text-bold">{selectedLocation.name}</p>
-          <p className="text-muted">{selectedLocation.address}</p>
+    <ScreenLayout 
+      title="Resumen de Pedido" 
+      showBack 
+      footer={
+        <div className="footer-action">
+          <PrimaryButton title="CONFIRMAR PEDIDO" onClick={handleConfirm} />
         </div>
+      }
+    >
+      <Card title="Destino" titleClassName="text-primary mb-1">
+        <p className="text-lg text-bold">{selectedLocation.name}</p>
+        <p className="text-muted">{selectedLocation.address}</p>
+      </Card>
 
-        <div className="card mb-4">
-          <h2 className="text-primary mb-3">Productos</h2>
-          {cart.map(item => (
-            <div key={item.product.id} className="flex-between mb-2 pb-1" style={{ borderBottom: '1px solid #eee' }}>
-              <div>
-                <p className="text-bold">{item.product.name}</p>
-                <p className="text-sm text-muted">{item.quantity} x ${item.product.price}</p>
-              </div>
-              <p className="text-bold">${item.quantity * item.product.price}</p>
-            </div>
-          ))}
-          
-          <div className="flex-between mt-3 pt-1">
-            <h3 className="text-xxl">TOTAL</h3>
-            <h3 className="text-xxl text-primary">${total}</h3>
-          </div>
-        </div>
-      </div>
-
-      <div className="footer-action">
-        <PrimaryButton title="CONFIRMAR PEDIDO" onClick={handleConfirm} />
-      </div>
-    </div>
+      <Card title="Productos">
+        {cart.map(item => (
+          <SummaryItemRow 
+            key={item.product.id}
+            name={item.product.name}
+            quantity={item.quantity}
+            price={item.product.price}
+          />
+        ))}
+        <TotalSummaryRow total={total} />
+      </Card>
+    </ScreenLayout>
   );
 };
+

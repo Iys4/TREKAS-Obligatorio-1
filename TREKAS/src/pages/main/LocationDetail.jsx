@@ -1,46 +1,38 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Header } from '../../components/layout/Header';
+import { ScreenLayout } from '../../components/layout/ScreenLayout';
+import { SectionTitle } from '../../components/ui/SectionTitle';
 import { OrderCard } from '../../components/ui/OrderCard';
-import { LOCATIONS } from '../../mockData';
+import { LocationHeaderCard } from '../../components/ui/LocationHeaderCard';
+import { useLocationDetail } from '../../hooks/useLocationDetail';
 
-export const LocationDetail = ({ ordersHistory = [] }) => {
-  const { name } = useParams();
-  
-  // Decodificar el nombre de la URL
-  const locationName = decodeURIComponent(name);
-  
-  const locationInfo = LOCATIONS.find(l => l.name === locationName);
-  const locationOrders = ordersHistory.filter(order => order.location === locationName);
+export const LocationDetail = ({ ordersHistory }) => {
+  const {
+    locationName,
+    locationInfo,
+    locationOrders,
+  } = useLocationDetail({ ordersHistory });
 
   return (
-    <div className="flex-col-full">
-      <Header title="Detalle del Local" showBack />
-      
-      <div className="screen-container">
-        {locationInfo ? (
-          <div className="card-padded card" style={{ borderLeft: '6px solid var(--primary)' }}>
-            <h2 className="text-primary mb-1">{locationInfo.name}</h2>
-            <p className="text-muted">{locationInfo.address}</p>
-          </div>
-        ) : (
-          <div className="card-padded text-center">
-            <h2>{locationName}</h2>
-          </div>
-        )}
+    <ScreenLayout title="Detalle del Local" showBack>
+      {/* Banner con la info del local, el nombre y la direccion */}
+      <LocationHeaderCard 
+        locationInfo={locationInfo} 
+        fallbackName={locationName} 
+      />
 
-        <h3 className="mb-3 text-lg">Historial de Pedidos ({locationOrders.length})</h3>
+      {/* Encabezado de historial */}
+      <SectionTitle title={`Historial de Pedidos (${locationOrders.length})`} className="mb-3 text-lg" />
 
-        {locationOrders.length > 0 ? (
-          locationOrders.map(order => (
-            <OrderCard key={order.id} order={order} />
-          ))
-        ) : (
-          <p className="text-center text-muted mt-4">
-            Este local aún no tiene pedidos realizados.
-          </p>
-        )}
-      </div>
-    </div>
+      {/* Si hay itemws en el array de locationOrders los lee todos y los muestra en un OrderCard. Con todos los datos necesarios*/}
+      {locationOrders.length > 0 ? (
+        locationOrders.map(order => (
+          <OrderCard key={order.id} order={order} />
+        ))
+      ) : (
+        <p className="text-center text-muted mt-4">
+          Este local aún no tiene pedidos realizados.
+        </p>
+      )}
+    </ScreenLayout>
   );
 };

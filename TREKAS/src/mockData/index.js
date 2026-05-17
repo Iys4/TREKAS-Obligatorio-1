@@ -16,6 +16,7 @@ export const DRIVER_PROFILE = {
       total: 4800, 
       status: 'ENTREGADO', 
       location: 'Kiosco El Sol',
+      driverEmail: 'repartir@gmail.com',
       items: [
         { name: 'TREKAS Tradicional', quantity: 20 },
         { name: 'TREKAS Chía', quantity: 15 }
@@ -27,10 +28,11 @@ export const DRIVER_PROFILE = {
       total: 2700, 
       status: 'EN CAMINO', 
       location: 'Supermercado Día',
+      driverEmail: 'repartir@gmail.com',
       items: [
         { name: 'TREKAS Horneadas', quantity: 30 }
       ]
     }
   ]
 };
-export const MOCK_CREDENTIALS = { email: "repartir", password: "repartir" };
+export const MOCK_CREDENTIALS = { email: "repartir@gmail.com", password: "repartir" };

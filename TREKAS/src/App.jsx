@@ -28,10 +28,10 @@ function App() {
   //que vamos a usar despues y precisan la info de quien es el usuario.
   //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro
   //Estan definidos dentro porque afectan la misma propiedad.
-  const { 
+  const {
     user,
     login,
-    logout 
+    logout
   } = useAuth();
 
 
@@ -44,60 +44,64 @@ function App() {
   const { selectedLocation, setSelectedLocation } = useLocation();
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
-  const { ordersHistory, confirmOrder } = useOrders({ cart, selectedLocation, total, clearCart });
+  const { ordersHistory, confirmOrder } = useOrders({ user, cart, selectedLocation, total, clearCart });
 
   return (
     //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.
+    //Cuando el sistema detecta una URL nos carga la pagina detallada, si es una ruta privada nos manda a login
     <BrowserRouter>
       <Routes>
         {/* Rutas de login */}
         <Route path="/login" element={
           <Login login={login} />
-          } />
-        
-        <Route path="/" 
-        element={<PrivateRoute 
-        user={user}>
-          <Home user={user} logout={logout} />
+        } />
+
+        <Route path="/"
+          element={<PrivateRoute
+            user={user}>
+            <Home user={user} logout={logout} />
           </PrivateRoute>} />
         {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a useLocation*/}
         <Route path="/order/new" element={
           <PrivateRoute user={user}>
-            <NewOrder selectedLocation={selectedLocation} 
-            setSelectedLocation={setSelectedLocation} 
-            cart={cart} 
-            addItem={addItem} />
+            <NewOrder selectedLocation={selectedLocation}
+              setSelectedLocation={setSelectedLocation}
+              cart={cart}
+              addItem={addItem} />
           </PrivateRoute>
         } />
-        {/* Resumen del pedido tomando los items que estan en la memoria*/}
+        {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia useOrders y confirmar pedido*/}
         <Route path="/order/summary" element={
           <PrivateRoute user={user}>
-            <OrderSummary 
-            cart={cart} 
-            total={total} 
-            selectedLocation={selectedLocation} 
-            confirmOrder={confirmOrder} />
+            <OrderSummary
+              cart={cart}
+              total={total}
+              selectedLocation={selectedLocation}
+              confirmOrder={confirmOrder} />
           </PrivateRoute>
         } />
-        
+        {/* Pagina de historial de pedidos, no envia nada y nos muestra lo que hay en la base de datos.*/}
         <Route path="/orders" element={
           <PrivateRoute user={user}>
-            <OrdersHistory 
-            ordersHistory={ordersHistory} />
+            <OrdersHistory
+              user={user}
+              ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
-        
+
+        {/* Pagina que nos muestra todos los locales a los que enviamos cosas, se puede clickear en el local para ver los envios hechos*/}
         <Route path="/locations" element={
           <PrivateRoute user={user}>
-            <AllLocations 
-            ordersHistory={ordersHistory} />
+            <AllLocations
+              ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
-        
+
+        {/* Ruta que nos muestra el detalle de los pedidos que historicamente hizo el local*/}
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
-            <LocationDetail 
-            ordersHistory={ordersHistory} />
+            <LocationDetail
+              ordersHistory={ordersHistory} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />

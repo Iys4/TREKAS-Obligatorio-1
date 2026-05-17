@@ -1,39 +1,28 @@
 import React from 'react';
-import { Header } from '../../components/layout/Header';
+import { ScreenLayout } from '../../components/layout/ScreenLayout';
 import { DRIVER_PROFILE } from '../../mockData';
 import { OrderCard } from '../../components/ui/OrderCard';
+import { DriverStatsCard } from '../../components/ui/DriverStatsCard';
+import { SectionTitle } from '../../components/ui/SectionTitle';
 
-export const OrdersHistory = ({ ordersHistory }) => {
+export const OrdersHistory = ({ user, ordersHistory }) => {
+  // Filtramos para obtener solo los pedidos del usuario actualmente conectado
+  const driverOrders = ordersHistory.filter(order => order.driverEmail === user?.email);
 
   return (
-    <div className="flex-col-full">
-      <Header title="Mis Pedidos" showBack />
+    <ScreenLayout title="Mis Pedidos" showBack>
+      {/* Nos muestra las metricas del conductor actual */}
+      <DriverStatsCard 
+        name={user?.name || DRIVER_PROFILE.name}
+        hoursWorked={DRIVER_PROFILE.hoursWorked}
+        ordersCount={driverOrders.length}
+      />
+      {/* Carga el historial de pedidos que hizo el conductor especifico */}
+      <SectionTitle title="Historial" />
       
-      <div className="screen-container">
-        {/* Métricas del Repartidor */}
-        <div className="card card-padded text-center">
-          <h2 className="text-primary mb-3">{DRIVER_PROFILE.name}</h2>
-          
-          <div className="flex-around stats-container">
-            <div>
-              <p className="text-xxl text-bold m-0">{DRIVER_PROFILE.hoursWorked}</p>
-              <p className="text-xs text-muted m-0">Horas Trabajadas</p>
-            </div>
-            <div className="stat-divider"></div>
-            <div>
-              <p className="text-xxl text-bold m-0">{ordersHistory.length}</p>
-              <p className="text-xs text-muted m-0">Envíos Realizados</p>
-            </div>
-          </div>
-        </div>
-
-        <h2 className="text-xl mb-3">Historial</h2>
-        
-        {ordersHistory.map(order => (
-          <OrderCard key={order.id} order={order} />
-        ))}
-      </div>
-    </div>
+      {driverOrders.map(order => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+    </ScreenLayout>
   );
 };
-

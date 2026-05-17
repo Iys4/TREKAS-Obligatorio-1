@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+//En esta funcion se guardan los datos que tienen que ver con el carrito
 // Hook que maneja unicamente el carrito de productos y el total
 export const useCart = () => {
   //guarda el carrito en un use state para que no se borre
