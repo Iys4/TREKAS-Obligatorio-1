@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
-import { useCart } from './hooks/useCart';
+import { usarCarrito } from './hooks/usarCarrito';
 import { useLocation } from './hooks/useLocation';
 import { useOrders } from './hooks/useOrders';
 
@@ -10,7 +10,7 @@ import { Login } from './pages/auth/Login';
 import { Home } from './pages/main/Home';
 import { AllLocations } from './pages/main/AllLocations';
 import { LocationDetail } from './pages/main/LocationDetail';
-import { NewOrder } from './pages/order/NewOrder';
+import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido';
 import { OrderSummary } from './pages/order/OrderSummary';
 import { OrdersHistory } from './pages/order/OrdersHistory';
 
@@ -36,15 +36,15 @@ function App() {
 
 
   // Hook del carrito, agrega y borra items del carrito usando los otros el hook de useOrders, con memoria!
-  const { cart, addItem, clearCart, total } = useCart();
+  const { cart, agregarItem, limpiarCarrito, total } = usarCarrito();
 
   // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
   //Empieza valiendo null
   //
-  const { selectedLocation, setSelectedLocation } = useLocation();
+  const { selectedLocation, establecerLocacion } = useLocation();
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
-  const { ordersHistory, confirmOrder } = useOrders({ user, cart, selectedLocation, total, clearCart });
+  const { ordersHistory, confirmOrder } = useOrders({ user, cart, selectedLocation, total, limpiarCarrito });
 
   return (
     //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.
@@ -64,15 +64,16 @@ function App() {
         {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a useLocation*/}
         <Route path="/order/new" element={
           <PrivateRoute user={user}>
-            <NewOrder selectedLocation={selectedLocation}
-              setSelectedLocation={setSelectedLocation}
+            <ElectorDeMenuNuevoPedido selectedLocation={selectedLocation}
+              establecerLocacion={establecerLocacion}
               cart={cart}
-              addItem={addItem} />
+              agregarItem={agregarItem} />
           </PrivateRoute>
         } />
         {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia useOrders y confirmar pedido*/}
         <Route path="/order/summary" element={
           <PrivateRoute user={user}>
+
             <OrderSummary
               cart={cart}
               total={total}

@@ -5,7 +5,7 @@ import { DRIVER_PROFILE } from '../mockData';
 
 // Toma datos de la base de datos (los productos)
 // Toma los datos que le enviamos cuando se llama la funcion que son cart, locacion, el total de precio y llama la funcion de eliminar el carro.
-export const useOrders = ({ user, cart, selectedLocation, total, clearCart }) => {
+export const useOrders = ({ user, cart, selectedLocation, total, limpiarCarrito }) => {
   const [ordersHistory, setOrdersHistory] = useState(DRIVER_PROFILE.history);
 
   // Crea un nuevo pedido con los datos actuales y lo agrega al historial
@@ -29,7 +29,7 @@ export const useOrders = ({ user, cart, selectedLocation, total, clearCart }) =>
     // Agrega el nuevo pedido al inicio del historial
     setOrdersHistory([newOrder, ...ordersHistory]);
     // Vacia el carrito y la ubicacion seleccionada
-    clearCart();
+    limpiarCarrito();
   };
 
   return {

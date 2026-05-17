@@ -8,14 +8,14 @@ import { SelectProductsStep } from '../../components/order/SelectProductsStep';
 //Cuando le damos un local lo carga en la memoria y avanza de step al step 2.
 //El step 2 nos pide que le digamos cual es el producto y cuanto producto queremos pedir.
 
-export const NewOrder = ({ selectedLocation, setSelectedLocation, cart, addItem }) => {
+export const ElectorDeMenuNuevoPedido = ({ selectedLocation, establecerLocacion, cart, agregarItem }) => {
   const nav = useNavigate();
   const [step, setStep] = useState(1);
   if (step === 1) {
     return (
       <SelectLocationStep
         selectedLocation={selectedLocation}
-        setSelectedLocation={setSelectedLocation}
+        establecerLocacion={establecerLocacion}
         onNext={() => setStep(2)}
       />
     );
@@ -24,9 +24,10 @@ export const NewOrder = ({ selectedLocation, setSelectedLocation, cart, addItem 
   return (
     <SelectProductsStep
       cart={cart}
-      addItem={addItem}
+      agregarItem={agregarItem}
       onNext={() => nav('/order/summary')}
       onBack={() => setStep(1)}
     />
   );
 };
+

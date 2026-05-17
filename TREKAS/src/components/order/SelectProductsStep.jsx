@@ -7,10 +7,10 @@ import { PRODUCTS } from '../../mockData';
 //Este componente es donde ingresamos los items que queremos pedir.
 
 //Cart, es el carrito que toma de la memoria
-//AddItem, funcion que agrega o elimina items del carrito
+//agregarItem, funcion que agrega o elimina items del carrito
 //onNext, la funcion del boton CONTINUAR
 //onBack, la funcion del boton VOLVER, que envia el contador en NewOrder para atras 
-export const SelectProductsStep = ({ cart, addItem, onNext, onBack }) => {
+export const SelectProductsStep = ({ cart, agregarItem, onNext, onBack }) => {
 
 
   const [search, setSearch] = useState('');
@@ -19,8 +19,8 @@ export const SelectProductsStep = ({ cart, addItem, onNext, onBack }) => {
   const getQ = id => cart.find(i => i.product.id === id)?.quantity || 0;
 
   //Filtro para buscar el producto en nuestra lista de productos para luego renderizarlos, ahora mismo no tiene mucho uso porque solo hay 3 productos pero si agregamos mas productos va a ser util
-  const filteredProducts = PRODUCTS.filter(p => 
-    p.name.toLowerCase().includes(search.toLowerCase()) || 
+  const filteredProducts = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.description.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -28,12 +28,12 @@ export const SelectProductsStep = ({ cart, addItem, onNext, onBack }) => {
     <div className="flex-col-full">
       <Header title="Productos" showBack onBack={onBack} />
       <div className="screen-container">
-        <Input 
+        <Input
           placeholder="Buscar producto..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        
+
         {filteredProducts.map(p => (
           <div key={p.id} className="card flex-between mb-2">
             <div>
@@ -42,10 +42,10 @@ export const SelectProductsStep = ({ cart, addItem, onNext, onBack }) => {
             <div className="flex-row-gap">
               {/* Botones para agregar o reducir numero de items en la lista en memoria. si tenes 0 no se envia la funcion, si tiene mas de 0
               cuenta la cantidad del item que hay de p.id y le resta 1. Hace lo mismo en el +
-              addItem esta en useCart.js y pide item y cantidad, item es p y cantidad es getQ(p.id)+1 o getQ(p.id)-1*/}
-              <button className="btn-stepper" onClick={()=>getQ(p.id)>0 && addItem(p, getQ(p.id)-1)}>-</button>
+              agregarItem esta en usarCarrito.js y pide item y cantidad, item es p y cantidad es getQ(p.id)+1 o getQ(p.id)-1*/}
+              <button className="btn-stepper" onClick={() => getQ(p.id) > 0 && agregarItem(p, getQ(p.id) - 1)}>-</button>
               <span className="text-xl text-bold">{getQ(p.id)}</span>
-              <button className="btn-stepper" onClick={()=>addItem(p, getQ(p.id)+1)}>+</button>
+              <button className="btn-stepper" onClick={() => agregarItem(p, getQ(p.id) + 1)}>+</button>
             </div>
           </div>
         ))}

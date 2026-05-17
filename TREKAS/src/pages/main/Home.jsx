@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
+//Esta pagina routea al usuario a cualquiera de las paginas que quiera ver, luego el app.jsx se encarga de cargar la pagina
+
 export const Home = ({ user, logout }) => {
   const nav = useNavigate();
   return (
