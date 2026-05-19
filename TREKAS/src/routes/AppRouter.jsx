@@ -4,9 +4,9 @@ import { Login } from '../pages/auth/Login';
 import { Home } from '../pages/main/Home';
 import { TodosLosLocales } from '../pages/main/TodosLosLocales';
 import { DetalleDeLocal } from '../pages/main/DetalleDeLocal';
-import { ElectorDeMenuNuevoPedido } from '../pages/pedido/ElectorDeMenuNuevoPedido';
-import { VerPedidos } from '../pages/pedido/VerPedidos';
-import { OrdersHistory } from '../pages/pedido/OrdersHistory';
+import { ElectorDeMenuNuevoPedido } from '../pages/order/ElectorDeMenuNuevoPedido';
+import { VerPedidos } from '../pages/order/VerPedidos';
+import { OrdersHistory } from '../pages/order/OrdersHistory';
 
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;

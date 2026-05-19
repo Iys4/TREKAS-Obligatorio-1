@@ -2,7 +2,7 @@ import React from 'react';
 import { FormatoCartaUI } from './FormatoCartaUI';
 
 export const DescripcionConductorUI = ({ name, horasTrabajadas, numeroDeOrdenes }) => (
-  <FormatoCartaUI title={name} className="card-padded text-center mb-4">
+  <FormatoCartaUI title={name} className="text-center mb-4">
     <div className="flex-around stats-container">
       <div>
         <p className="text-xxl text-bold m-0">{horasTrabajadas}</p>

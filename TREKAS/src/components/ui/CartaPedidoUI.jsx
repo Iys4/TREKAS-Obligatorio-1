@@ -14,12 +14,12 @@ export const CartaPedidoUI = ({ pedido }) => {
         />
       </div>
 
-      <p className="text-sm text-muted mb-2">
+      <p className="text-sm mb-2">
         {pedido.date} • Total: <strong>${pedido.total}</strong>
       </p>
 
       <div className="pedido-items-list">
-        <p className="text-xs-bold mb-1" style={{ color: '#666' }}>ÍTEMS PEDIDOS:</p>
+        <p className="text-xs-bold mb-1">ÍTEMS PEDIDOS:</p>
         {pedido.items.map((item, idx) => (
           <div key={idx} className="item-row">
             <span>{item.name}</span>

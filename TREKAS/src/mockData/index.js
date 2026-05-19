@@ -1,7 +1,11 @@
+import imgOriginal from '../assets/img/productos/original.png';
+import imgChia from '../assets/img/productos/chia.png';
+import imgGalletas from '../assets/img/productos/galletas.png';
+
 export const PRODUCTS = [
-  { id: 1, name: "TREKAS Tradicional", description: "Clásicas tostadas", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=TRADICIONAL" },
-  { id: 2, name: "TREKAS Chía", description: "Con semillas de chía", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=CHIA" },
-  { id: 3, name: "TREKAS Horneadas", description: "Extra crujientes", precio: 900, image: "https://via.placeholder.com/150/E65100/FFFFFF?text=HORNEADAS" }
+  { id: 1, name: "TREKAS Tradicional", description: "Clásicas tostadas", precio: 900, image: imgOriginal },
+  { id: 2, name: "TREKAS Chía", description: "Con semillas de chía", precio: 900, image: imgChia },
+  { id: 3, name: "TREKAS Horneadas", description: "Extra crujientes", precio: 900, image: imgGalletas }
 ];
 export const LOCALES = [
   { id: 1, name: "Kiosco El Sol", address: "Av. Siempre Viva 123" },
