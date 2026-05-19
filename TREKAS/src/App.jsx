@@ -85,7 +85,6 @@ function App() {
         <Route path="/pedidos" element={
           <PrivateRoute user={user}>
             <HistorialDePedidos
-            <HistorialDePedidos
               user={user}
               historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
