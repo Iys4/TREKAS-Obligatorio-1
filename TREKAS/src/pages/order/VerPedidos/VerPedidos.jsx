@@ -1,13 +1,13 @@
 import React from 'react';
-import { ScreenLayout } from '../../components/layout/ScreenLayout';
-import { BotonPrincipalUI } from '../../components/ui/BotonPrincipalUI';
-import { FormatoCartaUI } from '../../components/ui/FormatoCartaUI';
-import { ItemCheckoutUI } from '../../components/ui/ItemCheckoutUI';
-import { EstructuraCheckoutUI } from '../../components/ui/EstructuraCheckoutUI';
-import { usarResumenDePedidos } from '../../hooks/usarResumenDePedidos';
+import { ScreenLayout } from '../../../components/layout/ScreenLayout';
+import { BotonPrincipalUI } from '../../../components/ui/BotonPrincipalUI';
+import { FormatoCartaUI } from '../../../components/ui/FormatoCartaUI';
+import { ItemCheckoutUI } from '../../../components/ui/ItemCheckoutUI';
+import { EstructuraCheckoutUI } from '../../../components/ui/EstructuraCheckoutUI';
+import { usarResumenDePedidos } from './usarResumenDePedidos';
 
 // Esta es la pagina donde vemos el resumen del pedido
-// Le manda los props que recibe de App.jsx a usarResumenDePedidos
+// Le manda los props que recibe de App.jsx a usarResumenDePedidos que procesa la info
 export const VerPedidos = ({ carrito, total, localSeleccionado, confirmarOrden }) => {
   const {
     isEmpty,

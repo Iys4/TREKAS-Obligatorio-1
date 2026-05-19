@@ -2,11 +2,11 @@
 //Esta pagina tiene los componentes de la pantalla de login
 import React from 'react';
 //usarFormularioDeLogin es la logica del login
-import { usarFormularioDeLogin } from '../../hooks/usarFormularioDeLogin';
-import { InputUI } from '../../components/ui/InputUI';
-import { BotonPrincipalUI } from '../../components/ui/BotonPrincipalUI';
-import { ContenedorAuthUI } from '../../components/ui/ContenedorAuthUI';
-import { HeaderAuthUI } from '../../components/ui/HeaderAuthUI';
+import { usarFormularioDeLogin } from './usarFormularioDeLogin';
+import { InputUI } from '../../../components/ui/InputUI';
+import { BotonPrincipalUI } from '../../../components/ui/BotonPrincipalUI';
+import { ContenedorAuthUI } from '../../../components/ui/ContenedorAuthUI';
+import { HeaderAuthUI } from '../../../components/ui/HeaderAuthUI';
 
 //Llama a usarFormularioDeLogin y le pide que la informacion que necesita mostrarle al usuario ademas de llamar a la autorizacion necesaria en authservice.
 export const Login = ({ login }) => {

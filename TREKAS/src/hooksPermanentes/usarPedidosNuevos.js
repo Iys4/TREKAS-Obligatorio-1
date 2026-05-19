@@ -38,4 +38,3 @@ export const usarPedidosNuevos = ({ user, carrito, localSeleccionado, total, lim
     confirmarOrden,
   };
 };
-

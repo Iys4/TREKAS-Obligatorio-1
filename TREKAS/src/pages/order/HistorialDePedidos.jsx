@@ -7,7 +7,7 @@ import { TitulosDeSeccionUI } from '../../components/ui/TitulosDeSeccionUI';
 
 //Esta pagina nos muestra la informacion del usuario, en el caso de test nos muestra a todos los pedidos de la lista de pedidos
 
-export const OrdersHistory = ({ user, historialDeOrdenes }) => {
+export const HistorialDePedidos = ({ user, historialDeOrdenes }) => {
   // Filtramos para obtener solo los pedidos del usuario actualmente conectado
   const pedidosHechos = historialDeOrdenes.filter(pedido => pedido.emailConductor === user?.email);
 

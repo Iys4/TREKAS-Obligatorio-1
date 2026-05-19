@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LOCALES } from '../mockData';
+import { LOCALES } from '../../../mockData';
 
 //Estas son las funciones que luego se usan en TodosLosLocales para mostrar las localidades, usar filtros de busqueda por nombre y manejar cuando clickeas en un local para ver sus pedidos
 

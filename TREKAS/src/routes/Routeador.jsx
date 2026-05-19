@@ -6,13 +6,13 @@ import { TodosLosLocales } from '../pages/main/TodosLosLocales';
 import { DetalleDeLocal } from '../pages/main/DetalleDeLocal';
 import { ElectorDeMenuNuevoPedido } from '../pages/pedido/ElectorDeMenuNuevoPedido';
 import { VerPedidos } from '../pages/pedido/VerPedidos';
-import { OrdersHistory } from '../pages/pedido/OrdersHistory';
+import { HistorialDePedidos } from '../pages/pedido/HistorialDePedidos';
 
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;
 };
 
-export const AppRouter = ({
+export const Routeador = ({
   user, login, logout,
   carrito, agregarItem, removeItem, limpiarCarrito, total,
   localSeleccionado, establecerLocacion,
@@ -23,48 +23,47 @@ export const AppRouter = ({
       <Routes>
         <Route path="/login" element={<Login login={login} />} />
 
-        <Route path="/" element={<PrivateRoute 
-        user={user}>
+        <Route path="/" element={<PrivateRoute
+          user={user}>
           <Home user={user} logout={logout} /></PrivateRoute>} />
-
         <Route path="/pedido/new" element={
           <PrivateRoute user={user}>
-            <ElectorDeMenuNuevoPedido 
-            localSeleccionado={localSeleccionado} 
-            establecerLocacion={establecerLocacion} 
-            carrito={carrito} 
-            agregarItem={agregarItem} />
+            <ElectorDeMenuNuevoPedido
+              localSeleccionado={localSeleccionado}
+              establecerLocacion={establecerLocacion}
+              carrito={carrito}
+              agregarItem={agregarItem} />
           </PrivateRoute>
         } />
 
         <Route path="/pedido/summary" element={
           <PrivateRoute user={user}>
-            <VerPedidos 
-            carrito={carrito} 
-            total={total} 
-            localSeleccionado={localSeleccionado} 
-            confirmarOrden={confirmarOrden} />
+            <VerPedidos
+              carrito={carrito}
+              total={total}
+              localSeleccionado={localSeleccionado}
+              confirmarOrden={confirmarOrden} />
           </PrivateRoute>
         } />
 
         <Route path="/pedidos" element={
           <PrivateRoute user={user}>
-            <OrdersHistory 
-            historialDeOrdenes={historialDeOrdenes} />
+            <HistorialDePedidos
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         <Route path="/locations" element={
           <PrivateRoute user={user}>
-            <TodosLosLocales 
-            historialDeOrdenes={historialDeOrdenes} />
+            <TodosLosLocales
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
 
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
-            <DetalleDeLocal 
-            historialDeOrdenes={historialDeOrdenes} />
+            <DetalleDeLocal
+              historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />

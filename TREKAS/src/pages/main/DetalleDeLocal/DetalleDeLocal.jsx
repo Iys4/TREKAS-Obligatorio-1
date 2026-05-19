@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScreenLayout } from '../../components/layout/ScreenLayout';
-import { TitulosDeSeccionUI } from '../../components/ui/TitulosDeSeccionUI';
-import { CartaPedidoUI } from '../../components/ui/CartaPedidoUI';
-import { CartaLocalUI } from '../../components/ui/CartaLocalUI';
-import { usarDetalleDeLocal } from '../../hooks/usarDetalleDeLocal';
+import { ScreenLayout } from '../../../components/layout/ScreenLayout';
+import { TitulosDeSeccionUI } from '../../../components/ui/TitulosDeSeccionUI';
+import { CartaPedidoUI } from '../../../components/ui/CartaPedidoUI';
+import { CartaLocalUI } from '../../../components/ui/CartaLocalUI';
+import { usarDetalleDeLocal } from './usarDetalleDeLocal';
 
 export const DetalleDeLocal = ({ historialDeOrdenes }) => {
   const {
