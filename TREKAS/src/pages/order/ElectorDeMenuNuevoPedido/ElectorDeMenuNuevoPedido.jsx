@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SeleccionarLocalPaso1 } from '../../../components/order/SeleccionarLocalPaso1';
 import { SeleccionarProductoPaso2 } from '../../../components/order/SeleccionarProductoPaso2';
 
@@ -10,13 +10,17 @@ import { SeleccionarProductoPaso2 } from '../../../components/order/SeleccionarP
 
 export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion, carrito, agregarItem }) => {
   const nav = useNavigate();
-  const [step, setStep] = useState(1);
+  const location = useLocation();
+  const [step, setStep] = useState(location.state?.step || 1);
   if (step === 1) {
     return (
       <SeleccionarLocalPaso1
         localSeleccionado={localSeleccionado}
         establecerLocacion={establecerLocacion}
-        onNext={() => setStep(2)}
+        onNext={() => {
+          nav('.', { state: { step: 2 }, replace: true });
+          setStep(2);
+        }}
       />
     );
   }
@@ -26,7 +30,10 @@ export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion
       carrito={carrito}
       agregarItem={agregarItem}
       onNext={() => nav('/pedido/summary')}
-      onBack={() => setStep(1)}
+      onBack={() => {
+        nav('.', { state: { step: 1 }, replace: true });
+        setStep(1);
+      }}
     />
   );
 };

@@ -14,7 +14,7 @@ export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionad
 
   // Manejador para volver a la pantalla de nuevo pedido cuando se quiere ir para atras
   const irAtrasResumenDePedidos = () => {
-    nav('/pedido/new');
+    nav(-1);
   };
 
   return {
