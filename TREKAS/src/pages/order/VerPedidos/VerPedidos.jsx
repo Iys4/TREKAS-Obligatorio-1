@@ -32,6 +32,7 @@ export const VerPedidos = ({ carrito, total, localSeleccionado, confirmarOrden }
     <ScreenLayout
       title="Resumen de Pedido"
       showBack
+      onBack={irAtrasResumenDePedidos}
       footer={
         <div className="footer-action">
           <BotonPrincipalUI title="CONFIRMAR PEDIDO" onClick={confirmadorDePedidos} />

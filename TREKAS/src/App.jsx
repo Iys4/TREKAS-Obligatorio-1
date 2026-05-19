@@ -7,6 +7,7 @@ import { usarPedidosNuevos } from './hooksPermanentes/usarPedidosNuevos';
 
 // Importamos las paginas acá
 import { Login } from './pages/auth/Login/Login';
+import { Register } from './pages/auth/Register/Register';
 import { Home } from './pages/main/Home/Home';
 import { TodosLosLocales } from './pages/main/TodosLosLocales/TodosLosLocales';
 import { DetalleDeLocal } from './pages/main/DetalleDeLocal/DetalleDeLocal';
@@ -14,9 +15,8 @@ import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido
 import { VerPedidos } from './pages/order/VerPedidos/VerPedidos';
 import { HistorialDePedidos } from './pages/order/HistorialDePedidos/HistorialDePedidos';
 
-//NO SE QUE HACE
 // Esta linea se fija si el user tiene hijos, si no tiene hijos es porque user esta vacio, entonces te manda a la pagina de login
-//Solo se activa esta linea si la ruta es privada y uno quiere entrar sin tener una cuenta iniciada
+//Solo se activa esta linea si la ruta es privada y uno quiere entrar al URL sin tener una cuenta iniciada
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;
 };
@@ -25,15 +25,14 @@ function App() {
   //Este es el hook que se inicializa cuando comienza la app, le dice a la app QUIEN esta logeado
   //Llama a enviarAuth que es la funcion que nos devuelve el usuario
   //Se llama al inicio porque es un componente con memoria, luego le envia esta memoria a los componentes
-  //que vamos a usar despues y precisan la info de quien es el usuario.
-  //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro
-  //Estan definidos dentro porque afectan la misma propiedad.
+  //que vamos a usar despues y precisan la info de quien es el usuario y los contenidos del carrito.
+  //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro.
   const {
     user,
     login,
-    logout
+    logout,
+    register
   } = enviarAuth();
-
 
   // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
   const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito();
@@ -54,6 +53,9 @@ function App() {
         {/* Rutas de login */}
         <Route path="/login" element={
           <Login login={login} />
+        } />
+        <Route path="/register" element={
+          <Register register={register} />
         } />
 
         <Route path="/"

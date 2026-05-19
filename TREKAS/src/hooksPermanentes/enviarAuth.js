@@ -20,9 +20,21 @@ export const enviarAuth = () => {
   //Si apretas el boton de logout borra el usuario de la memoria
   const logout = () => guardarUsuario(null);
 
+  //Registro falso que nos devuelve el usuario para que la app sepa quien esta logeado
+  const register = async (email, contraseña, name) => {
+    try {
+      const userData = { email, name };
+      guardarUsuario(userData);
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return {
     user,
     login,
-    logout
+    logout,
+    register
   };
 };
