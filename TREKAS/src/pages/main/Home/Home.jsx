@@ -15,7 +15,7 @@ export const Home = ({ user, logout }) => {
       <BotonPrincipalUI title="NUEVO PEDIDO" onClick={() => nav('/pedido/new')} />
       <BotonPrincipalUI title="MI PERFIL" outline onClick={() => nav('/pedidos')} />
       <BotonPrincipalUI title="VER TODOS LOS LOCALES" outline onClick={() => nav('/locations')} />
-      <BotonPrincipalUI title="CERRAR SESIÓN" outline onClick={logout} style={{ borderColor: 'var(--error)', color: 'var(--error)' }} />
+      <BotonPrincipalUI title="CERRAR SESIÓN" outline onClick={logout}/>
     </div>
   );
 };
