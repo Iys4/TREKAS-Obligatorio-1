@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Login } from '../pages/auth/Login';
-import { Home } from '../pages/main/Home';
-import { TodosLosLocales } from '../pages/main/TodosLosLocales';
-import { DetalleDeLocal } from '../pages/main/DetalleDeLocal';
-import { ElectorDeMenuNuevoPedido } from '../pages/pedido/ElectorDeMenuNuevoPedido';
-import { VerPedidos } from '../pages/pedido/VerPedidos';
-import { HistorialDePedidos } from '../pages/pedido/HistorialDePedidos';
+import { Login } from '../pages/auth/Login/Login';
+import { Home } from '../pages/main/Home/Home';
+import { TodosLosLocales } from '../pages/main/TodosLosLocales/TodosLosLocales';
+import { DetalleDeLocal } from '../pages/main/DetalleDeLocal/DetalleDeLocal';
+import { ElectorDeMenuNuevoPedido } from '../pages/order/ElectorDeMenuNuevoPedido/ElectorDeMenuNuevoPedido';
+import { VerPedidos } from '../pages/order/VerPedidos/VerPedidos';
+import { HistorialDePedidos } from '../pages/order/HistorialDePedidos/HistorialDePedidos';
 
 const PrivateRoute = ({ children, user }) => {
   return user ? children : <Navigate to="/login" />;
@@ -26,6 +26,7 @@ export const Routeador = ({
         <Route path="/" element={<PrivateRoute
           user={user}>
           <Home user={user} logout={logout} /></PrivateRoute>} />
+
         <Route path="/pedido/new" element={
           <PrivateRoute user={user}>
             <ElectorDeMenuNuevoPedido

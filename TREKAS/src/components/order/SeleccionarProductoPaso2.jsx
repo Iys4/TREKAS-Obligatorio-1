@@ -3,6 +3,9 @@ import { Header } from '../layout/Header';
 import { BotonPrincipalUI } from '../ui/BotonPrincipalUI';
 import { InputUI } from '../ui/InputUI';
 import { PRODUCTS } from '../../mockData';
+import imgOriginal from '../../assets/img/productos/original.png';
+import imgChia from '../../assets/img/productos/chia.png';
+import imgGalletas from '../../assets/img/productos/galletas.png';
 
 //Este componente es donde ingresamos los items que queremos pedir.
 
@@ -36,6 +39,7 @@ export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack 
 
         {filteredProducts.map(p => (
           <div key={p.id} className="card flex-between mb-2">
+            <img src= {p.image} alt= {p.name} className='item-image' />
             <div>
               <h3 className="m-0">{p.name}</h3><p className="text-primary text-bold m-0">${p.precio}</p>
             </div>

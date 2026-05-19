@@ -1,0 +1,1 @@
+export { HistorialDePedidos } from './HistorialDePedidos';

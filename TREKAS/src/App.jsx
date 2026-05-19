@@ -5,14 +5,14 @@ import { usarCarrito } from './hooksPermanentes/usarCarrito';
 import { hookLocacion } from './hooksPermanentes/hookLocacion';
 import { usarPedidosNuevos } from './hooksPermanentes/usarPedidosNuevos';
 
-// Importamos las pagimas acá
+// Importamos las paginas acá
 import { Login } from './pages/auth/Login/Login';
-import { Home } from './pages/main/Home';
+import { Home } from './pages/main/Home/Home';
 import { TodosLosLocales } from './pages/main/TodosLosLocales/TodosLosLocales';
 import { DetalleDeLocal } from './pages/main/DetalleDeLocal/DetalleDeLocal';
-import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido';
+import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido/ElectorDeMenuNuevoPedido';
 import { VerPedidos } from './pages/order/VerPedidos/VerPedidos';
-import { HistorialDePedidos } from './pages/order/HistorialDePedidos';
+import { HistorialDePedidos } from './pages/order/HistorialDePedidos/HistorialDePedidos';
 
 //NO SE QUE HACE
 // Esta linea se fija si el user tiene hijos, si no tiene hijos es porque user esta vacio, entonces te manda a la pagina de login
@@ -84,6 +84,7 @@ function App() {
         {/* Pagina de historial de pedidos, no envia nada y nos muestra lo que hay en la base de datos.*/}
         <Route path="/pedidos" element={
           <PrivateRoute user={user}>
+            <HistorialDePedidos
             <HistorialDePedidos
               user={user}
               historialDeOrdenes={historialDeOrdenes} />
