@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { LOCALES } from '../mockData';
+import { LOCALES } from '../../../mockData';
 
 export const usarDetalleDeLocal = ({ historialDeOrdenes = [] }) => {
   //Toma el valor despues de los parametros "Trekas/Locations/Kiosko%El%Sol" se vuelve "Kiosko%El%Sol"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BotonPrincipalUI } from '../../components/ui/BotonPrincipalUI';
+import { BotonPrincipalUI } from '../../../components/ui/BotonPrincipalUI';
 
 //Esta pagina routea al usuario a cualquiera de las paginas que quiera ver, luego el app.jsx se encarga de cargar la pagina
 

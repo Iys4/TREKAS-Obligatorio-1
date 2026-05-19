@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SeleccionarLocalPaso1 } from '../../components/order/SeleccionarLocalPaso1';
-import { SeleccionarProductoPaso2 } from '../../components/order/SeleccionarProductoPaso2';
+import { SeleccionarLocalPaso1 } from '../../../components/order/SeleccionarLocalPaso1';
+import { SeleccionarProductoPaso2 } from '../../../components/order/SeleccionarProductoPaso2';
 
 //Este es el controlador de los pasos para crear un nuevo pedido
 //Lo llama app.jsx cuando queremos hacer un nuevo pedido, ahi el "step" vale 1, que significa que tenemos que enviar un local.
@@ -30,4 +30,3 @@ export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion
     />
   );
 };
-

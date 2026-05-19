@@ -231,7 +231,7 @@ h1 {
    .header — Barra superior sticky con efecto glassmorphism (blur).
    COMPONENTE: Header.jsx (el <header>)
    USADO EN: Todas las páginas que usan ScreenLayout con title:
-             DetalleDeLocal, TodosLosLocales, OrdersHistory, VerPedidos,
+             DetalleDeLocal, TodosLosLocales, HistorialDePedidos, VerPedidos,
              SeleccionarLocalPaso1, SeleccionarProductoPaso2
    ========================================================================== */
 .header {
