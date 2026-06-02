@@ -1,0 +1,549 @@
+{
+  "info": {
+    "_postman_id": "f495f73a-09ba-4380-adb4-649ee6049a29",
+    "name": "Creacion Aplicaciones ORT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "25523385"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"alumno@test.com\",\r\n  \"password\": \"123456\",\r\n  \"data\": {\r\n    \"nombre\": \"Alumno\",\r\n    \"telefono\": \"099123456\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/auth/register",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"alumno@test.com\",\r\n  \"password\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuario",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/usuarios/me",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "usuarios",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTc0MzIxOSwiZXhwIjoxNzgwMzQ4MDE5fQ.h0s8EndaYUe_AtVRDHATXx1vUZzDgghlNDjJx5bXxqs",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Carlos\",\r\n  \"telefono\": \"099123456\",\r\n  \"direccion\": \"Montevideo\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/usuarios/me",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "usuarios",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Productos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/productos",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Productos",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Sprite 500\",\r\n  \"descripcion\": \"Completa\",\r\n  \"precio\": 70,\r\n  \"imagen\": \"https://...\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/productos",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Producto por ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/productos/6a14baf651638c7aa1d9e1f5",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productos",
+            "6a14baf651638c7aa1d9e1f5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Producto",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Hamburguesa super\",\r\n  \"descripcion\": \"Completisima\",\r\n  \"precio\": 310,\r\n  \"imagen\": \"https://...\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/productos/6a14baf651638c7aa1d9e1f5",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productos",
+            "6a14baf651638c7aa1d9e1f5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Producto",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/productos/6a14baf651638c7aa1d9e1f5",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productos",
+            "6a14baf651638c7aa1d9e1f5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Carrito",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/carrito",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Carrito",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"productoId\": \"6a14bbd551638c7aa1d9e1fb\",\r\n      \"cantidad\": 2,\r\n      \"data\": {\r\n        \"nombre\": \"Hamburguesa\",\r\n        \"precio\": 350\r\n      }\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/carrito",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Carrito",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/carrito",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Compras",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/compras",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "compras"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Compras",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"productoId\": \"ID_PRODUCTO\",\r\n      \"cantidad\": 2,\r\n      \"data\": {\r\n        \"nombre\": \"Hamburguesa\",\r\n        \"precio\": 350\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 700,\r\n  \"datosCheckout\": {\r\n    \"nombre\": \"Alumno\",\r\n    \"email\": \"alumno@test.com\", \r\n    \"direccion\": \"Montevideo\"\r\n  },\r\n  \"data\": {\r\n    \"comentario\": \"Sin cebolla\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/compras",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "compras"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Compras",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-project-key",
+            "value": "grupo-15",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTEzNGQxZjI4NjViMzBjYjZjNmUyMWIiLCJlbWFpbCI6ImFsdW1ub0B0ZXN0LmNvbSIsInByb2plY3RLZXkiOiJncnVwby0xNSIsImlhdCI6MTc3OTY0OTkwNiwiZXhwIjoxNzgwMjU0NzA2fQ.8E2BowM_ElbStiF6AF-ZGgyrWAbU_AEZEb4u_121PaU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://creacionaplicaciones.onrender.com/api/compras/6a14bd8251638c7aa1d9e20f",
+          "protocol": "https",
+          "host": [
+            "creacionaplicaciones",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "compras",
+            "6a14bd8251638c7aa1d9e20f"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
