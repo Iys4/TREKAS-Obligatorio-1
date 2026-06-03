@@ -25,7 +25,7 @@ export const Login = ({ login }) => {
     <ContenedorAuthUI>
       <HeaderAuthUI title="TREKAS Delivery" subtitle="Ingreso Operarios" />
       <InputUI label="Email" type="email" value={email} onChange={e => actualizarEmail(e.target.value)} />
-      <InputUI label="Contraseña" type="contraseña" value={pass} onChange={e => actualizarContraseña(e.target.value)} error={error} />
+      <InputUI label="Contraseña" type="password" value={pass} onChange={e => actualizarContraseña(e.target.value)} error={error} />
       <div className="mb-4"></div>
       {/* Llama a erroresLogin en usarFormularioDeLogin y luego inicia el proceso de autorizacion */}
       <BotonPrincipalUI title="INGRESAR" onClick={erroresLogin} />
