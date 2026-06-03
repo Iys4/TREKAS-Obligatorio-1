@@ -1,31 +1,48 @@
 import { useState } from 'react';
-import { servicioDeLogin } from '../services/authService';
+import { apiFetch, saveToken, removeToken } from '../services/api';
 
 export const enviarAuth = () => {
-  //UseState es la expresion que usamos cuando le queremos dar memoria a la computadora, empieza vacio
-  const [user, guardarUsuario] = useState(null);
-  //UserData es un array que dice Email, contraseña
-  const login = async (email, contraseña) => {
-    try {
-      //Se fija si lo que ingresamos como userData es igual que lo que esta en nuestra "base de datos" 
-      //En el futuro tenemos que cambiar esta linea
-      //LoginService mira la base de datos y nos devuelve si esta correcto o no
-      const userData = await servicioDeLogin(email, contraseña);
-      guardarUsuario(userData);
-      return userData;
-    } catch (error) {
-      throw error;
-    }
-  };
-  //Si apretas el boton de logout borra el usuario de la memoria
-  const logout = () => guardarUsuario(null);
+  //UseState con inicializador perezoso para leer de localStorage y mantener la sesión al recargar
+  const [user, guardarUsuario] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  //Registro falso que nos devuelve el usuario para que la app sepa quien esta logeado
-  const register = async (email, contraseña, name) => {
+  const login = async (email, password) => {
+    const respuesta = await apiFetch("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
+    saveToken(respuesta.token);
+    localStorage.setItem("user", JSON.stringify(respuesta.user));
+    guardarUsuario(respuesta.user);
+    return respuesta.user;
+  };
+
+  const logout = () => {
+    removeToken();
+    localStorage.removeItem("user");
+    guardarUsuario(null);
+  };
+
+  //Registro real que consume la API del backend
+  const register = async (email, password) => {
     try {
-      const userData = { email, name };
-      guardarUsuario(userData);
-      return userData;
+      const respuesta = await apiFetch("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          data: {
+            nombre: null,
+            horasTrabajadas: null
+          }
+        }),
+      });
+      saveToken(respuesta.token);
+      localStorage.setItem("user", JSON.stringify(respuesta.user));
+      guardarUsuario(respuesta.user);
+      return respuesta.user;
     } catch (error) {
       throw error;
     }

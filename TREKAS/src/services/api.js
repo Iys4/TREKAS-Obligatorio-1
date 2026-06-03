@@ -1,0 +1,44 @@
+// =====================================================
+// Archivo central para consumir la API del obligatorio.
+// =====================================================
+
+// CAMBIAR ESTA URL por la URL real de Render cuando esté publicada.
+export const API_URL = "https://creacionaplicaciones.onrender.com";
+
+// Project Key hardcodeada para este ejemplo.
+// En clase usamos grupo-15.
+export const PROJECT_KEY = "grupo-07";
+
+export const getToken = () => localStorage.getItem("token");
+export const saveToken = (token) => localStorage.setItem("token", token);
+export const removeToken = () => localStorage.removeItem("token");
+
+// Función genérica para hacer fetch a la API.
+// Ya agrega siempre:
+// - Content-Type
+// - x-project-key
+// - Authorization si hay token
+export const apiFetch = async (path, options = {}) => {
+  const token = getToken();
+
+  const headers = {
+    "Content-Type": "application/json",
+    "x-project-key": PROJECT_KEY,
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(options.headers || {}),
+  };
+
+  const response = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers,
+  });
+
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    throw new Error(data?.error || "Error consumiendo la API");
+  }
+
+  return data;
+};
