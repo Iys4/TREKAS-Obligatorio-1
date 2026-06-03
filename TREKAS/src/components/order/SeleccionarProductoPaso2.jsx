@@ -39,28 +39,44 @@ export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack 
         // Adaptamos el formato de la API al formato interno de la app (id, name, description, precio, image)
         const adaptados = [];
         (respuesta.items || []).forEach(p => {
-          if (Array.isArray(p.data)) {
-            // Si cargaron un array de productos dentro del campo data de un solo documento
-            p.data.forEach((subProd, index) => {
-              const nombreLimpio = (subProd.nombre || "").replace(/\s*\(API\)/gi, "");
-              adaptados.push({
-                id: `${p.id}-${index}`,
-                name: nombreLimpio,
-                description: subProd.descripcion,
-                precio: subProd.precio,
-                image: resolverImagen(nombreLimpio, subProd.imagen)
+          if (p.data) {
+            // Caso 1: data contiene una propiedad data interna que es un array (p.data.data)
+            if (p.data.data && Array.isArray(p.data.data)) {
+              p.data.data.forEach((subProd, index) => {
+                const nombreLimpio = (subProd.nombre || "").replace(/\s*\(API\)/gi, "");
+                adaptados.push({
+                  id: `${p.id}-${index}`,
+                  name: nombreLimpio,
+                  description: subProd.descripcion,
+                  precio: subProd.precio,
+                  image: resolverImagen(nombreLimpio, subProd.imagen)
+                });
               });
-            });
-          } else if (p.data) {
-            // Si cada documento de la API representa un único producto
-            const nombreLimpio = (p.data.nombre || "").replace(/\s*\(API\)/gi, "");
-            adaptados.push({
-              id: p.id,
-              name: nombreLimpio,
-              description: p.data.descripcion,
-              precio: p.data.precio,
-              image: resolverImagen(nombreLimpio, p.data.imagen)
-            });
+            }
+            // Caso 2: data directamente es un array (p.data)
+            else if (Array.isArray(p.data)) {
+              p.data.forEach((subProd, index) => {
+                const nombreLimpio = (subProd.nombre || "").replace(/\s*\(API\)/gi, "");
+                adaptados.push({
+                  id: `${p.id}-${index}`,
+                  name: nombreLimpio,
+                  description: subProd.descripcion,
+                  precio: subProd.precio,
+                  image: resolverImagen(nombreLimpio, subProd.imagen)
+                });
+              });
+            }
+            // Caso 3: data es un objeto individual de producto
+            else if (p.data.nombre) {
+              const nombreLimpio = (p.data.nombre || "").replace(/\s*\(API\)/gi, "");
+              adaptados.push({
+                id: p.id,
+                name: nombreLimpio,
+                description: p.data.descripcion,
+                precio: p.data.precio,
+                image: resolverImagen(nombreLimpio, p.data.imagen)
+              });
+            }
           }
         });
         setProductos(adaptados);
