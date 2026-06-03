@@ -4,6 +4,20 @@ import { BotonPrincipalUI } from '../ui/BotonPrincipalUI';
 import { InputUI } from '../ui/InputUI';
 import { apiFetch } from '../../services/api';
 
+// Importación de imágenes locales como fallback
+import imgOriginal from '../../assets/img/productos/original.png';
+import imgChia from '../../assets/img/productos/chia.png';
+import imgGalletas from '../../assets/img/productos/galletas.png';
+
+// Función para determinar si se usa imagen local o URL de la API (por ejemplo, si falla imgur)
+const resolverImagen = (nombre, apiImagen) => {
+  const norm = (nombre || "").toLowerCase();
+  if (norm.includes("tradicional") || norm.includes("original")) return imgOriginal;
+  if (norm.includes("chía") || norm.includes("chia")) return imgChia;
+  if (norm.includes("horneada") || norm.includes("galleta")) return imgGalletas;
+  return apiImagen; // En caso de que no coincida, utiliza la URL
+};
+
 //Este componente es donde ingresamos los items que queremos pedir.
 
 //carrito, es el carrito que toma de la memoria
@@ -22,14 +36,33 @@ export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack 
         setLoading(true);
         const respuesta = await apiFetch("/api/productos");
         
-        // Adaptamos el formato de la API (id y data) al formato interno de la app (id, name, description, precio, image)
-        const adaptados = (respuesta.items || []).map(p => ({
-          id: p.id,
-          name: `${p.data.nombre} (API)`, // (API) agregado al nombre para confirmar el origen
-          description: p.data.descripcion,
-          precio: p.data.precio,
-          image: p.data.imagen
-        }));
+        // Adaptamos el formato de la API al formato interno de la app (id, name, description, precio, image)
+        const adaptados = [];
+        (respuesta.items || []).forEach(p => {
+          if (Array.isArray(p.data)) {
+            // Si cargaron un array de productos dentro del campo data de un solo documento
+            p.data.forEach((subProd, index) => {
+              const nombreLimpio = (subProd.nombre || "").replace(/\s*\(API\)/gi, "");
+              adaptados.push({
+                id: `${p.id}-${index}`,
+                name: nombreLimpio,
+                description: subProd.descripcion,
+                precio: subProd.precio,
+                image: resolverImagen(nombreLimpio, subProd.imagen)
+              });
+            });
+          } else if (p.data) {
+            // Si cada documento de la API representa un único producto
+            const nombreLimpio = (p.data.nombre || "").replace(/\s*\(API\)/gi, "");
+            adaptados.push({
+              id: p.id,
+              name: nombreLimpio,
+              description: p.data.descripcion,
+              precio: p.data.precio,
+              image: resolverImagen(nombreLimpio, p.data.imagen)
+            });
+          }
+        });
         setProductos(adaptados);
       } catch (err) {
         setError(err.message || "Error al cargar productos");
@@ -54,28 +87,13 @@ export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack 
     <div className="flex-col-full">
       <Header title="Productos" showBack onBack={onBack} />
       <div className="screen-container">
-        {/* Indicador visual de origen de datos */}
-        <div style={{ 
-          padding: '8px 12px', 
-          marginBottom: '12px', 
-          borderRadius: '8px', 
-          fontSize: '13px', 
-          fontWeight: '600', 
-          background: '#d4edda', 
-          color: '#155724', 
-          textAlign: 'center', 
-          border: '1px solid #c3e6cb' 
-        }}>
-          🟢 Cargando productos en tiempo real desde la API
-        </div>
-
         <InputUI
           placeholder="Buscar producto..."
           value={search}
           onChange={(e) => actualizarInput(e.target.value)}
         />
 
-        {loading && <p className="text-center text-muted">Cargando productos de la API...</p>}
+        {loading && <p className="text-center text-muted">Cargando productos...</p>}
         {error && <p className="text-center text-danger" style={{ color: '#721c24' }}>{error}</p>}
 
         {!loading && !error && filteredProducts.map(p => (
