@@ -66,9 +66,9 @@ function App() {
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
   const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
 
-  // Filtramos los pedidos activos (EN CAMINO) para pasarlos al mapa en Home
+  // Filtramos los pedidos activos (activo === true) para pasarlos al mapa en Home
   // Asi los pedidos nuevos confirmados tambien aparecen automaticamente en el mapa
-  const pedidosActivos = historialDeOrdenes.filter(p => p.status === 'EN CAMINO');
+  const pedidosActivos = historialDeOrdenes.filter(p => p.activo === true);
 
   return (
     //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.

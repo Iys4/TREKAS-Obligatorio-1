@@ -31,6 +31,8 @@ export const PEDIDOS_ACTIVOS = [
     date: '2026-05-26',
     total: 5400,
     status: 'EN CAMINO',
+    activo: true,
+    ACTIVO: true,
     location: 'Kiosco El Sol',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -43,6 +45,8 @@ export const PEDIDOS_ACTIVOS = [
     date: '2026-05-26',
     total: 2700,
     status: 'EN CAMINO',
+    activo: true,
+    ACTIVO: true,
     location: 'Farmacia Central',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -54,6 +58,8 @@ export const PEDIDOS_ACTIVOS = [
     date: '2026-05-25',
     total: 1800,
     status: 'EN CAMINO',
+    activo: true,
+    ACTIVO: true,
     location: 'Minimarket Rambla',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -69,6 +75,8 @@ export const PEDIDOS_CONCRETADOS = [
     date: '2026-05-10',
     total: 4800,
     status: 'ENTREGADO',
+    activo: false,
+    ACTIVO: false,
     location: 'Kiosco El Sol',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -81,6 +89,8 @@ export const PEDIDOS_CONCRETADOS = [
     date: '2026-05-12',
     total: 2700,
     status: 'ENTREGADO',
+    activo: false,
+    ACTIVO: false,
     location: 'Supermercado Día',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -92,6 +102,8 @@ export const PEDIDOS_CONCRETADOS = [
     date: '2026-05-18',
     total: 3600,
     status: 'ENTREGADO',
+    activo: false,
+    ACTIVO: false,
     location: 'Almacén Don Pedro',
     emailConductor: 'repartir@gmail.com',
     items: [
@@ -104,6 +116,8 @@ export const PEDIDOS_CONCRETADOS = [
     date: '2026-05-20',
     total: 1800,
     status: 'ENTREGADO',
+    activo: false,
+    ACTIVO: false,
     location: 'Farmacia Central',
     emailConductor: 'repartir@gmail.com',
     items: [
