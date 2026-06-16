@@ -8,7 +8,7 @@ import { SeleccionarProductoPaso2 } from '../../../components/order/SeleccionarP
 //Cuando le damos un local lo carga en la memoria y avanza de step al step 2.
 //El step 2 nos pide que le digamos cual es el producto y cuanto producto queremos pedir.
 
-export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion, carrito, agregarItem }) => {
+export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion, carrito, agregarItem, locales = [] }) => {
   const nav = useNavigate();
   const location = useLocation();
   const [step, setStep] = useState(location.state?.step || 1);
@@ -17,6 +17,7 @@ export const ElectorDeMenuNuevoPedido = ({ localSeleccionado, establecerLocacion
       <SeleccionarLocalPaso1
         localSeleccionado={localSeleccionado}
         establecerLocacion={establecerLocacion}
+        locales={locales}
         onNext={() => {
           nav('.', { state: { step: 2 }, replace: true });
           setStep(2);

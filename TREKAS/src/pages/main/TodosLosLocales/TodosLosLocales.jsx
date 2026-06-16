@@ -6,14 +6,14 @@ import { usarListaLocales } from './usarListaLocales';
 
 // Componente que muestra todos los locales a los que entregamos mercadería.
 // Permite buscar por nombre/dirección y muestra la cantidad de pedidos históricos de cada uno.
-export const TodosLosLocales = ({ historialDeOrdenes }) => {
+export const TodosLosLocales = ({ historialDeOrdenes, locales = [] }) => {
   const {
     search,
     actualizarInput,
     localesFiltrados,
     getOrdersForLocation,
     verDetalleDeLocal,
-  } = usarListaLocales({ historialDeOrdenes });
+  } = usarListaLocales({ historialDeOrdenes, locales });
 
   return (
     <ScreenLayout title="Todos los Locales" showBack>

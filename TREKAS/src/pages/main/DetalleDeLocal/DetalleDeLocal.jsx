@@ -5,12 +5,12 @@ import { CartaPedidoUI } from '../../../components/ui/CartaPedidoUI';
 import { CartaLocalUI } from '../../../components/ui/CartaLocalUI';
 import { usarDetalleDeLocal } from './usarDetalleDeLocal';
 
-export const DetalleDeLocal = ({ historialDeOrdenes }) => {
+export const DetalleDeLocal = ({ historialDeOrdenes, locales = [] }) => {
   const {
     nombreDeLocal,
     infoDeLocal,
     pedidosDeLocal,
-  } = usarDetalleDeLocal({ historialDeOrdenes });
+  } = usarDetalleDeLocal({ historialDeOrdenes, locales });
 
   return (
     <ScreenLayout title="Detalle del Local" showBack>

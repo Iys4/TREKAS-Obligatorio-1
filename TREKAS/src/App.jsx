@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { enviarAuth } from './hooksPermanentes/enviarAuth';
 import { usarCarrito } from './hooksPermanentes/usarCarrito';
 import { hookLocacion } from './hooksPermanentes/hookLocacion';
 import { usarPedidosNuevos } from './hooksPermanentes/usarPedidosNuevos';
+import { apiFetch } from './services/api';
 
 // Importamos las paginas acá
 import { Login } from './pages/auth/Login/Login';
@@ -42,6 +43,26 @@ function App() {
   //
   const { localSeleccionado, establecerLocacion } = hookLocacion();
 
+  const [locales, setLocales] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      apiFetch("/api/locales")
+        .then(res => {
+          const fetched = (res.items || []).map(item => ({
+            id: item.data?.id || item.id,
+            name: item.data?.name || item.data?.nombre || '',
+            address: item.data?.address || item.data?.direccion || '',
+            coordenadas: item.data?.coordenadas || [],
+          }));
+          setLocales(fetched);
+        })
+        .catch(err => console.error("Error fetching locales:", err));
+    } else {
+      setLocales([]);
+    }
+  }, [user]);
+
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
   const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
 
@@ -65,7 +86,7 @@ function App() {
         <Route path="/"
           element={<PrivateRoute
             user={user}>
-            <Home user={user} logout={logout} pedidosActivos={pedidosActivos} />
+            <Home user={user} logout={logout} pedidosActivos={pedidosActivos} locales={locales} />
           </PrivateRoute>} />
         {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a hookLocacion*/}
         <Route path="/pedido/new" element={
@@ -73,7 +94,8 @@ function App() {
             <ElectorDeMenuNuevoPedido localSeleccionado={localSeleccionado}
               establecerLocacion={establecerLocacion}
               carrito={carrito}
-              agregarItem={agregarItem} />
+              agregarItem={agregarItem}
+              locales={locales} />
           </PrivateRoute>
         } />
         {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia usarPedidosNuevos y confirmar pedido*/}
@@ -100,7 +122,8 @@ function App() {
         <Route path="/locations" element={
           <PrivateRoute user={user}>
             <TodosLosLocales
-              historialDeOrdenes={historialDeOrdenes} />
+              historialDeOrdenes={historialDeOrdenes}
+              locales={locales} />
           </PrivateRoute>
         } />
 
@@ -108,7 +131,8 @@ function App() {
         <Route path="/locations/:name" element={
           <PrivateRoute user={user}>
             <DetalleDeLocal
-              historialDeOrdenes={historialDeOrdenes} />
+              historialDeOrdenes={historialDeOrdenes}
+              locales={locales} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />
