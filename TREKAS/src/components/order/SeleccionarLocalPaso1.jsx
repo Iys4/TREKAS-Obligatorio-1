@@ -3,17 +3,15 @@ import { Header } from '../layout/Header';
 import { BotonPrincipalUI } from '../ui/BotonPrincipalUI';
 import { InputUI } from '../ui/InputUI';
 import { CartaDeLocalUI } from '../ui/CartaDeLocalUI';
-import { LOCALES } from '../../mockData';
-
 //localSeleccionado Recibe el location guardado en la memoria (generalmente deberia ser null)
 //establecerLocacion es el componente que guarda el location en la memoria
 //onNext, cuando se apreta CONTINUAR sube el step en NewOrder.jsx
 
-export const SeleccionarLocalPaso1 = ({ localSeleccionado, establecerLocacion, onNext }) => {
+export const SeleccionarLocalPaso1 = ({ locales = [], localSeleccionado, establecerLocacion, onNext }) => {
   const [search, actualizarInput] = useState('');
 
-  //Filtro de busqueda usando LOCALES en index.js
-  const localesFiltrados = LOCALES.filter(l =>
+  //Filtro de busqueda usando locales
+  const localesFiltrados = locales.filter(l =>
     l.name.toLowerCase().includes(search.toLowerCase()) ||
     l.address.toLowerCase().includes(search.toLowerCase())
   );

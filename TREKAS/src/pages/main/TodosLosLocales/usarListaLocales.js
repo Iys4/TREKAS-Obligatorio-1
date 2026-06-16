@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LOCALES } from '../../../mockData';
-
 //Estas son las funciones que luego se usan en TodosLosLocales para mostrar las localidades, usar filtros de busqueda por nombre y manejar cuando clickeas en un local para ver sus pedidos
 
-export const usarListaLocales = ({ historialDeOrdenes }) => {
+export const usarListaLocales = ({ historialDeOrdenes, locales = [] }) => {
   const [search, actualizarInput] = useState('');
   const nav = useNavigate();
 
   // Filtrar locales
-  const localesFiltrados = LOCALES.filter(l =>
+  const localesFiltrados = locales.filter(l =>
     l.name.toLowerCase().includes(search.toLowerCase()) ||
     l.address.toLowerCase().includes(search.toLowerCase())
   );
