@@ -26,6 +26,7 @@ export const usarPedidosNuevos = ({ user, carrito, localSeleccionado, total, lim
         return {
           id: item.id,
           date: item.data?.date || item.createdAt?.split('T')[0] || new Date().toISOString().split('T')[0],
+          createdAt: item.createdAt,
           total: item.total,
           status,
           activo,
@@ -96,6 +97,7 @@ export const usarPedidosNuevos = ({ user, carrito, localSeleccionado, total, lim
       const newOrder = {
         id: respuesta.compra?.id || respuesta.id,
         date: body.data.date,
+        createdAt: respuesta.compra?.createdAt || respuesta.createdAt || new Date().toISOString(),
         total: body.total,
         status: body.data.status,
         activo: body.data.activo,

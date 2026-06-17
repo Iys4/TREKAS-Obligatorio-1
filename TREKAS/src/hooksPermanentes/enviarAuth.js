@@ -48,17 +48,30 @@ export const enviarAuth = () => {
     }
   };
 
-  const updateUserName = (newName) => {
+  const updateUserName = async (newName) => {
     if (user) {
-      const updatedUser = {
-        ...user,
-        data: {
-          ...user.data,
-          nombre: newName
-        }
-      };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      guardarUsuario(updatedUser);
+      try {
+        const respuesta = await apiFetch("/api/usuarios/me", {
+          method: "PUT",
+          body: JSON.stringify({
+            nombre: newName
+          })
+        });
+        
+        // La API devuelve el usuario actualizado
+        const updatedUser = respuesta.user || {
+          ...user,
+          data: {
+            ...user.data,
+            nombre: newName
+          }
+        };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        guardarUsuario(updatedUser);
+      } catch (error) {
+        console.error("Error al actualizar el nombre en la API:", error);
+        throw error;
+      }
     }
   };
 
