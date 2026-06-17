@@ -7,7 +7,7 @@ export const API_URL = "https://creacionaplicaciones.onrender.com";
 
 // Project Key hardcodeada para este ejemplo.
 // En clase usamos grupo-15.
-export const PROJECT_KEY = "grupo-07";
+export const PROJECT_KEY = "trekas-app";
 
 export const getToken = () => localStorage.getItem("token");
 export const saveToken = (token) => localStorage.setItem("token", token);

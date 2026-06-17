@@ -36,13 +36,13 @@ function App() {
     updateUserName
   } = enviarAuth();
 
-  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
-  const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito();
-
   // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
   //Empieza valiendo null
   //
   const { localSeleccionado, establecerLocacion } = hookLocacion();
+
+  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
+  const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito(user, localSeleccionado);
 
   const [locales, setLocales] = useState([]);
 
