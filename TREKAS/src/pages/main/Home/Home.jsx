@@ -9,7 +9,7 @@ export const Home = ({ user, logout, pedidosActivos, locales = [] }) => {
   const nav = useNavigate();
   return (
     <div className="screen-container">
-      <h2 className="mb-4">Hola, {user?.name}</h2>
+      <h2 className="mb-4">Hola, {user?.data?.nombre || user?.name || "Conductor"}</h2>
 
       {/* Mapa de pedidos: locales con pedidos activos en naranja, sin pedidos en gris */}
       <TitulosDeSeccionUI title="Ver mapa de pedidos" />

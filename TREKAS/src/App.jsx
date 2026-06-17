@@ -32,7 +32,8 @@ function App() {
     user,
     login,
     logout,
-    register
+    register,
+    updateUserName
   } = enviarAuth();
 
   // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
@@ -114,7 +115,8 @@ function App() {
           <PrivateRoute user={user}>
             <HistorialDePedidos
               user={user}
-              historialDeOrdenes={historialDeOrdenes} />
+              historialDeOrdenes={historialDeOrdenes}
+              updateUserName={updateUserName} />
           </PrivateRoute>
         } />
 

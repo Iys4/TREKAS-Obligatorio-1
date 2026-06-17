@@ -9,6 +9,8 @@ import { HeaderAuthUI } from '../../../components/ui/HeaderAuthUI';
 
 export const Register = ({ register }) => {
   const {
+    nombre,
+    actualizarNombre,
     email,
     actualizarEmail,
     pass,
@@ -23,6 +25,7 @@ export const Register = ({ register }) => {
   return (
     <ContenedorAuthUI>
       <HeaderAuthUI title="TREKAS Delivery" subtitle="Registro de Operarios" />
+      <InputUI label="Nombre" type="text" value={nombre} onChange={e => actualizarNombre(e.target.value)} />
       <InputUI label="Email" type="email" value={email} onChange={e => actualizarEmail(e.target.value)} />
       <InputUI label="Contraseña" type="password" value={pass} onChange={e => actualizarContrasena(e.target.value)} />
       <InputUI label="Confirmar Contraseña" type="password" value={passConfirm} onChange={e => actualizarContrasenaConfirm(e.target.value)} error={error} />

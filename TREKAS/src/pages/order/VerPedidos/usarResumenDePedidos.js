@@ -7,9 +7,17 @@ export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionad
   const isEmpty = !localSeleccionado || !carrito || carrito.length === 0;
 
   // Es la funcion que se envia cuando apretas CONFIRMAR PEDIDO, te devuelve a la pantalla principal "/" y lanza confirmarOrden para que quede guardada la memoria en la base de datos
-  const confirmadorDePedidos = () => {
-    if (confirmarOrden) confirmarOrden();
-    nav('/');
+  const confirmadorDePedidos = async () => {
+    if (confirmarOrden) {
+      try {
+        await confirmarOrden();
+        nav('/');
+      } catch (error) {
+        alert("Error al confirmar el pedido: " + error.message);
+      }
+    } else {
+      nav('/');
+    }
   };
 
   // Manejador para volver a la pantalla de nuevo pedido cuando se quiere ir para atras

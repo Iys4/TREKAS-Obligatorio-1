@@ -26,7 +26,7 @@ export const enviarAuth = () => {
   };
 
   //Registro real que consume la API del backend
-  const register = async (email, password) => {
+  const register = async (email, password, nombre) => {
     try {
       const respuesta = await apiFetch("/auth/register", {
         method: "POST",
@@ -34,8 +34,8 @@ export const enviarAuth = () => {
           email,
           password,
           data: {
-            nombre: null,
-            horasTrabajadas: null
+            nombre: nombre || null,
+            horasTrabajadas: 0
           }
         }),
       });
@@ -48,10 +48,25 @@ export const enviarAuth = () => {
     }
   };
 
+  const updateUserName = (newName) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        data: {
+          ...user.data,
+          nombre: newName
+        }
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      guardarUsuario(updatedUser);
+    }
+  };
+
   return {
     user,
     login,
     logout,
-    register
+    register,
+    updateUserName
   };
 };

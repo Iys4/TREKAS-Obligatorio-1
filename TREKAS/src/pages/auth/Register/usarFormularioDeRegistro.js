@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 //Maneja la logica del registro, envia los datos a enviarAuth
 export const usarFormularioDeRegistro = ({ register }) => {
   const nav = useNavigate();
+  const [nombre, actualizarNombre] = useState('');
   const [email, actualizarEmail] = useState('');
   const [pass, actualizarContrasena] = useState('');
   const [passConfirm, actualizarContrasenaConfirm] = useState('');
@@ -11,6 +12,10 @@ export const usarFormularioDeRegistro = ({ register }) => {
 
   const validarYRegistrar = async () => {
     actualizarError('');
+    if (!nombre.trim()) {
+      actualizarError('Por favor ingrese su nombre.');
+      return;
+    }
     //Regex hermoso para marcar que es un email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -29,7 +34,7 @@ export const usarFormularioDeRegistro = ({ register }) => {
     }
     
     try {
-      await register(email, pass);
+      await register(email, pass, nombre);
       nav('/');
     } catch (e) {
       actualizarError(e.message);
@@ -39,6 +44,8 @@ export const usarFormularioDeRegistro = ({ register }) => {
   const navigateToLogin = () => nav('/login');
 
   return {
+    nombre,
+    actualizarNombre,
     email,
     actualizarEmail,
     pass,
