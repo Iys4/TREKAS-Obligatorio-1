@@ -355,7 +355,7 @@ h1 {
 
 /* ---- CARDS & CONTAINERS ---- */
 
-/* .card — Tarjeta blanca con sombra sutil y borde.
+/* .card — Tarjeta blanca con sombra y borde sutil.
    COMPONENTE: FormatoCartaUI.jsx (wrapper base de tarjetas)
    USADO EN: VerPedidos.jsx (tarjetas "Destino" y "Productos"),
              CartaPedidoUI.jsx (cada pedido en historial),
@@ -363,12 +363,12 @@ h1 {
              SeleccionarProductoPaso2.jsx (cada producto),
              CartaLocalUI.jsx (detalle del local) */
 .card {
-  background: var(--primary);
+  background: var(--surface);
   padding: 20px;
   border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.07);
   margin-bottom: 16px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
@@ -666,9 +666,10 @@ h1 {
 /* .pedido-items-list — Contenedor con fondo gris claro para la lista de ítems de un pedido.
    USADO EN: CartaPedidoUI.jsx (la sección "ÍTEMS PEDIDOS" dentro de cada tarjeta de pedido) */
 .pedido-items-list {
-
+  background: #f8fafc;
   padding: 12px;
-  border-radius: 4px;
+  border-radius: 8px;
+  margin-top: 4px;
 }
 
 /* .item-row — Fila de un ítem individual (nombre a la izquierda, dato a la derecha).

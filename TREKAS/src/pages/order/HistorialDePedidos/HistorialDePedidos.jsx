@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { ScreenLayout } from '../../../components/layout/ScreenLayout';
-import { PERFIL_CONDUCTOR } from '../../../mockData';
 import { CartaPedidoUI } from '../../../components/ui/CartaPedidoUI';
 import { DescripcionConductorUI } from '../../../components/ui/DescripcionConductorUI';
 import { TitulosDeSeccionUI } from '../../../components/ui/TitulosDeSeccionUI';
 import { BotonPrincipalUI } from '../../../components/ui/BotonPrincipalUI';
 import { InputUI } from '../../../components/ui/InputUI';
+
+const PERFIL_CONDUCTOR = {
+  name: "Juan Pérez",
+  horasTrabajadas: 32,
+};
 
 //Esta pagina nos muestra la informacion del usuario, en el caso de test nos muestra a todos los pedidos de la lista de pedidos
 

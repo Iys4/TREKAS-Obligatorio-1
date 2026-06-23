@@ -146,7 +146,7 @@ export const Home = ({ user, logout, pedidosActivos, locales = [] }) => {
 
       <BotonPrincipalUI title="NUEVO PEDIDO" onClick={() => nav('/pedido/new')} />
       <BotonPrincipalUI title="MI PERFIL" outline onClick={() => nav('/pedidos')} />
-      <BotonPrincipalUI title="VER TODOS LOS LOCALES" outline onClick={() => nav('/locations')} />
+      <BotonPrincipalUI title="VER PEDIDOS ACTIVOS" outline onClick={() => nav('/locations')} />
       <BotonPrincipalUI title="CERRAR SESIÓN" outline onClick={logout}/>
     </div>
   );

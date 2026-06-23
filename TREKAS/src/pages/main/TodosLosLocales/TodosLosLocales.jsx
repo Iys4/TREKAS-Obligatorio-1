@@ -4,19 +4,22 @@ import { InputUI } from '../../../components/ui/InputUI';
 import { CartaDeLocalUI } from '../../../components/ui/CartaDeLocalUI';
 import { usarListaLocales } from './usarListaLocales';
 
-// Componente que muestra todos los locales a los que entregamos mercadería.
-// Permite buscar por nombre/dirección y muestra la cantidad de pedidos históricos de cada uno.
-export const TodosLosLocales = ({ historialDeOrdenes, locales = [] }) => {
+/**
+ * Pantalla principal de locales / pedidos en camino.
+ * Muestra los locales ordenados: primero los que tienen pedidos EN CAMINO,
+ * luego el resto. Permite confirmar entregas directamente desde aquí.
+ */
+export const TodosLosLocales = ({ historialDeOrdenes, locales = [], marcarEntregado }) => {
   const {
     search,
     actualizarInput,
-    localesFiltrados,
-    getOrdersForLocation,
+    localesOrdenados,
+    getPedidosActivosParaLocal,
     verDetalleDeLocal,
   } = usarListaLocales({ historialDeOrdenes, locales });
 
   return (
-    <ScreenLayout title="Todos los Locales" showBack>
+    <ScreenLayout title="Ver Pedidos Activos" showBack>
       <InputUI
         placeholder="Filtrar locales..."
         value={search}
@@ -24,17 +27,17 @@ export const TodosLosLocales = ({ historialDeOrdenes, locales = [] }) => {
       />
 
       <div className="mt-3">
-        {localesFiltrados.map(loc => (
+        {localesOrdenados.map(loc => (
           <CartaDeLocalUI
             key={loc.id}
             location={loc}
-            pedidos={getOrdersForLocation(loc.name)}
+            pedidos={getPedidosActivosParaLocal(loc.name)}
             onClick={() => verDetalleDeLocal(loc.name)}
+            onConfirmarEntrega={marcarEntregado}
           />
         ))}
 
-        {/* Mensaje amigable si la búsqueda no arroja resultados */}
-        {localesFiltrados.length === 0 && (
+        {localesOrdenados.length === 0 && (
           <p className="text-center text-muted mt-4">
             No se encontraron locales.
           </p>

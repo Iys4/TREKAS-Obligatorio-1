@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { enviarAuth } from './hooksPermanentes/enviarAuth';
-import { usarCarrito } from './hooksPermanentes/usarCarrito';
-import { hookLocacion } from './hooksPermanentes/hookLocacion';
-import { usarPedidosNuevos } from './hooksPermanentes/usarPedidosNuevos';
+import { enviarAuth } from './hooks/enviarAuth';
+import { usarCarrito } from './hooks/usarCarrito';
+import { hookLocacion } from './hooks/hookLocacion';
+import { usarPedidosNuevos } from './hooks/usarPedidosNuevos';
 import { apiFetch } from './services/api';
 
 // Importamos las paginas acá
@@ -65,7 +65,7 @@ function App() {
   }, [user]);
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
-  const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
+  const { historialDeOrdenes, confirmarOrden, marcarEntregado } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
 
   // Filtramos los pedidos activos (activo === true) para pasarlos al mapa en Home
   // Asi los pedidos nuevos confirmados tambien aparecen automaticamente en el mapa
@@ -125,7 +125,8 @@ function App() {
           <PrivateRoute user={user}>
             <TodosLosLocales
               historialDeOrdenes={historialDeOrdenes}
-              locales={locales} />
+              locales={locales}
+              marcarEntregado={marcarEntregado} />
           </PrivateRoute>
         } />
 
@@ -134,7 +135,8 @@ function App() {
           <PrivateRoute user={user}>
             <DetalleDeLocal
               historialDeOrdenes={historialDeOrdenes}
-              locales={locales} />
+              locales={locales}
+              marcarEntregado={marcarEntregado} />
           </PrivateRoute>
         } />
         <Route path="*" element={<Navigate to="/" />} />

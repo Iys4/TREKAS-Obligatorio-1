@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormatoCartaUI } from './FormatoCartaUI';
 
-export const CartaLocalUI = ({ infoDeLocal, fallbackName }) => {
+export const DetalleLocalCardUI = ({ infoDeLocal, fallbackName }) => {
   if (infoDeLocal) {
     return (
       <FormatoCartaUI

@@ -1,1 +1,0 @@
-export { HistorialDePedidos } from './HistorialDePedidos';

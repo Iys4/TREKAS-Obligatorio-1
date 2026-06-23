@@ -5,8 +5,7 @@
 // CAMBIAR ESTA URL por la URL real de Render cuando esté publicada.
 export const API_URL = "https://creacionaplicaciones.onrender.com";
 
-// Project Key hardcodeada para este ejemplo.
-// En clase usamos grupo-15.
+// Project Key
 export const PROJECT_KEY = "trekas-app";
 
 export const getToken = () => localStorage.getItem("token");
@@ -36,9 +35,16 @@ export const apiFetch = async (path, options = {}) => {
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;
 
-  if (!response.ok) {
-    throw new Error(data?.error || "Error consumiendo la API");
+  // If the response is not OK, log details and handle unauthorized token
+if (!response.ok) {
+  // Clear token on 401 to force re‑login
+  if (response.status === 401) {
+    removeToken();
   }
+  // Log status and any error message returned by the API for debugging
+  console.error('API error', response.status, data?.error || text);
+  throw new Error(data?.error || "Error consumiendo la API");
+}
 
   return data;
 };

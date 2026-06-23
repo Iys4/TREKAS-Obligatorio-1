@@ -1,23 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//Estas son las funciones que luego se usan en TodosLosLocales para mostrar las localidades, usar filtros de busqueda por nombre y manejar cuando clickeas en un local para ver sus pedidos
 
+/**
+ * Hook para la pantalla "Ver Pedidos en Camino" (ruta /locations).
+ * Maneja el filtro de búsqueda, el ordenamiento de locales
+ * (con pedidos activos primero) y la navegación al detalle de un local.
+ */
 export const usarListaLocales = ({ historialDeOrdenes, locales = [] }) => {
   const [search, actualizarInput] = useState('');
   const nav = useNavigate();
 
-  // Filtrar locales
+  // Filtra locales por nombre o dirección según el texto ingresado
   const localesFiltrados = locales.filter(l =>
     l.name.toLowerCase().includes(search.toLowerCase()) ||
     l.address.toLowerCase().includes(search.toLowerCase())
   );
 
-  //Lee todo el array de pedidos y suma un numero cada ves que se muestre el local como el local target, muy poco eficiente.
-  const getOrdersForLocation = (locationName) => {
-    return historialDeOrdenes.filter(order => order.location === locationName);
-  };
+  // Devuelve TODOS los pedidos de un local (activos y entregados)
+  const getOrdersForLocation = (locationName) =>
+    historialDeOrdenes.filter(order => order.location === locationName);
 
-  // Nos envia al URL del local que se quiere saber el detalle
+  // Devuelve solo los pedidos EN CAMINO (activo === true) de un local
+  const getPedidosActivosParaLocal = (locationName) =>
+    historialDeOrdenes.filter(
+      order => order.location === locationName && order.activo === true
+    );
+
+  // Ordena: locales con pedidos activos primero, luego el resto
+  const localesOrdenados = [...localesFiltrados].sort((a, b) => {
+    const aActivos = getPedidosActivosParaLocal(a.name).length;
+    const bActivos = getPedidosActivosParaLocal(b.name).length;
+    if (bActivos > 0 && aActivos === 0) return 1;
+    if (aActivos > 0 && bActivos === 0) return -1;
+    return 0;
+  });
+
+  // Navega al detalle del local
   const verDetalleDeLocal = (locationName) => {
     nav(`/locations/${encodeURIComponent(locationName)}`);
   };
@@ -25,8 +43,9 @@ export const usarListaLocales = ({ historialDeOrdenes, locales = [] }) => {
   return {
     search,
     actualizarInput,
-    localesFiltrados,
+    localesOrdenados,
     getOrdersForLocation,
+    getPedidosActivosParaLocal,
     verDetalleDeLocal,
   };
 };

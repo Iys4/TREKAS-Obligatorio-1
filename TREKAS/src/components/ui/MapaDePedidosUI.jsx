@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -26,6 +27,7 @@ const CENTRO_MONTEVIDEO = [-34.9058, -56.1913];
 
 // Recibe la lista de locales (con coordenadas) y los pedidos activos para saber cuáles colorear
 export const MapaDePedidosUI = ({ locales = [], pedidosActivos = [] }) => {
+  const navigate = useNavigate();
   // Construimos un Set con los nombres de los locales que tienen al menos un pedido activo
   const localesConPedidoActivo = useMemo(
     () => new Set(pedidosActivos.map(p => p.location)),
@@ -65,6 +67,26 @@ export const MapaDePedidosUI = ({ locales = [], pedidosActivos = [] }) => {
               <span style={{ color: tieneActivo ? '#FF8C00' : '#9E9E9E', fontWeight: 600 }}>
                 {tieneActivo ? '● Pedido en camino' : '○ Sin pedidos activos'}
               </span>
+              <div style={{ marginTop: '8px' }}>
+                <button
+                  onClick={() => navigate(`/locations/${encodeURIComponent(local.name)}`)}
+                  style={{
+                    background: 'var(--primary, #FF8C00)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '6px 10px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    width: '100%',
+                    textAlign: 'center',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  VER PEDIDOS
+                </button>
+              </div>
             </Popup>
           </Marker>
         );
