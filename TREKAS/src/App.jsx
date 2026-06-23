@@ -45,7 +45,8 @@ function App() {
   const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito(user, localSeleccionado);
 
   const [locales, setLocales] = useState([]);
-
+//Toma los locales de la API, el programa actualmente no tiene como cargar
+//Items en la API de Locales
   useEffect(() => {
     if (user) {
       apiFetch("/api/locales")

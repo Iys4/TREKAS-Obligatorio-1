@@ -11,7 +11,7 @@ import { ColorDestaqueUI } from './ColorDestaqueUI';
  *  - onClick: navega al detalle del local
  *  - onConfirmarEntrega(pedidoId): marca un pedido como ENTREGADO
  */
-export const CartaDeLocalUI = ({ location, pedidos = [], selected = false, onClick, onConfirmarEntrega }) => {
+export const CartaDeLocalUI = ({ location, pedidos = [], selected = false, isClosest = false, onClick, onConfirmarEntrega }) => {
   // ID del pedido pendiente de confirmar (abre el modal)
   const [pedidoAConfirmar, setPedidoAConfirmar] = useState(null);
   const [cargando, setCargando] = useState(false);
@@ -53,11 +53,10 @@ export const CartaDeLocalUI = ({ location, pedidos = [], selected = false, onCli
           >
             {location.name}
           </h3>
-          {selected ? (
-            <ColorDestaqueUI text="SELECCIONADO" color="orange" />
-          ) : (
-            hasOrders && <ColorDestaqueUI text={`${pedidos.length} EN CAMINO`} color="blue" />
-          )}
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            {isClosest && <ColorDestaqueUI text="MÁS CERCANO" color="green" />}
+            {hasOrders && <ColorDestaqueUI text={`${pedidos.length} EN CAMINO`} color="blue" />}
+          </div>
         </div>
 
         {/* Dirección */}

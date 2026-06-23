@@ -99,7 +99,7 @@ export const Home = ({ user, logout, pedidosActivos, locales = [] }) => {
       {/* Mapa de pedidos: locales con pedidos activos en naranja, sin pedidos en gris */}
       <TitulosDeSeccionUI title="Ver mapa de pedidos" />
       <div className="mb-4">
-        <MapaDePedidosUI locales={locales} pedidosActivos={pedidosActivos} />
+        <MapaDePedidosUI locales={locales} pedidosActivos={pedidosActivos} userCoords={coords} />
       </div>
 
       {/* Local más cercano con pedido */}

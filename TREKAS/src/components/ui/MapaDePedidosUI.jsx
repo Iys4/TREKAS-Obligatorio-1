@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -22,29 +22,76 @@ const crearIconoMarcador = (conPedidoActivo) => {
   });
 };
 
+// Ícono azul para el conductor/usuario
+const crearIconoConductor = () => {
+  return L.divIcon({
+    className: '',
+    html: `
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="10" fill="#2563EB" stroke="white" stroke-width="3" />
+        <circle cx="16" cy="16" r="4" fill="white" />
+      </svg>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -18],
+  });
+};
+
 // Centro de Montevideo — Plaza Independencia
 const CENTRO_MONTEVIDEO = [-34.9058, -56.1913];
 
-// Recibe la lista de locales (con coordenadas) y los pedidos activos para saber cuáles colorear
-export const MapaDePedidosUI = ({ locales = [], pedidosActivos = [] }) => {
+// Componente para actualizar dinámicamente la vista del mapa
+const ChangeView = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (center) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, map]);
+  return null;
+};
+
+// Recibe la lista de locales (con coordenadas), pedidos activos y opcionalmente las coordenadas del usuario
+export const MapaDePedidosUI = ({ locales = [], pedidosActivos = [], userCoords = null }) => {
   const navigate = useNavigate();
+
   // Construimos un Set con los nombres de los locales que tienen al menos un pedido activo
   const localesConPedidoActivo = useMemo(
     () => new Set(pedidosActivos.map(p => p.location)),
     [pedidosActivos]
   );
 
+  const mapCenter = userCoords
+    ? [userCoords.latitude, userCoords.longitude]
+    : CENTRO_MONTEVIDEO;
+
   return (
     <MapContainer
-      center={CENTRO_MONTEVIDEO}
+      center={mapCenter}
       zoom={14}
       scrollWheelZoom={false}
       style={{ height: '350px', width: '100%', borderRadius: '12px' }}
     >
+      <ChangeView center={mapCenter} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
+      {/* Marcador del conductor */}
+      {userCoords && (
+        <Marker
+          position={[userCoords.latitude, userCoords.longitude]}
+          icon={crearIconoConductor()}
+        >
+          <Popup>
+            <strong>Tu ubicación actual</strong>
+            <br />
+            Conductor en servicio
+          </Popup>
+        </Marker>
+      )}
 
       {locales.map(local => {
         // Si el local no tiene coordenadas no lo dibujamos
