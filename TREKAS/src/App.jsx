@@ -7,6 +7,57 @@ import imgChia from './assets/OriginalSinChia.png';
 import imgHorneadas from './assets/Horneadas.png';
 
 function App() {
+<<<<<<< Updated upstream
+=======
+  //Este es el hook que se inicializa cuando comienza la app, le dice a la app QUIEN esta logeado
+  //Llama a enviarAuth que es la funcion que nos devuelve el usuario
+  //Se llama al inicio porque es un componente con memoria, luego le envia esta memoria a los componentes
+  //que vamos a usar despues y precisan la info de quien es el usuario y los contenidos del carrito.
+  //Tambien le envia la funcionalidad a los botones login y logout que estan definidos dentro.
+  const {
+    user,
+    login,
+    logout,
+    register,
+    updateUserName
+  } = enviarAuth();
+
+  // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
+  //Empieza valiendo null
+  //
+  const { localSeleccionado, establecerLocacion } = hookLocacion();
+
+  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria
+  const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito(user, localSeleccionado);
+
+  const [locales, setLocales] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      apiFetch("/api/locales")
+        .then(res => {
+          const fetched = (res.items || []).map(item => ({
+            id: item.data?.id || item.id,
+            name: item.data?.name || item.data?.nombre || '',
+            address: item.data?.address || item.data?.direccion || '',
+            coordenadas: item.data?.coordenadas || [],
+          }));
+          setLocales(fetched);
+        })
+        .catch(err => console.error("Error fetching locales:", err));
+    } else {
+      setLocales([]);
+    }
+  }, [user]);
+
+  // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
+  const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
+
+  // Filtramos los pedidos activos (activo === true) para pasarlos al mapa en Home
+  // Asi los pedidos nuevos confirmados tambien aparecen automaticamente en el mapa
+  const pedidosActivos = historialDeOrdenes.filter(p => p.activo === true);
+
+>>>>>>> Stashed changes
   return (
     <div className="app-container">
       {/* Header */}
