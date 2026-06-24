@@ -19,7 +19,6 @@ export const apiRegister = async (email, password, nombre) => {
       password,
       data: {
         nombre: nombre || null,
-        horasTrabajadas: 0
       }
     }),
   });

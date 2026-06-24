@@ -6,11 +6,6 @@ import { TitulosDeSeccionUI } from '../../../components/ui/TitulosDeSeccionUI';
 import { BotonPrincipalUI } from '../../../components/ui/BotonPrincipalUI';
 import { InputUI } from '../../../components/ui/InputUI';
 
-const PERFIL_CONDUCTOR = {
-  name: "Juan Pérez",
-  horasTrabajadas: 32,
-};
-
 //Esta pagina nos muestra la informacion del usuario, en el caso de test nos muestra a todos los pedidos de la lista de pedidos
 
 export const HistorialDePedidos = ({ user, historialDeOrdenes, updateUserName }) => {
@@ -81,8 +76,7 @@ export const HistorialDePedidos = ({ user, historialDeOrdenes, updateUserName })
 
       {/* Nos muestra las metricas del conductor actual */}
       <DescripcionConductorUI
-        name={currentName || PERFIL_CONDUCTOR.name}
-        horasTrabajadas={user?.data?.horasTrabajadas || PERFIL_CONDUCTOR.horasTrabajadas}
+        name={currentName || 'Conductor'}
         numeroDeOrdenes={pedidosHechos.length}
       />
       {/* Carga el historial de pedidos que hizo el conductor especifico */}
