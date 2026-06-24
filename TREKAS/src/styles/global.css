@@ -1,0 +1,683 @@
+@import url("https://use.typekit.net/bvd4ays.css");
+
+/* ==========================================================================
+   VARIABLES GLOBALES — Define los colores, sombras y transiciones de toda la app.
+   Se referencian con var(--nombre) en todo el archivo.
+   ========================================================================== */
+:root {
+  --primary: #fcbc00;
+  /* Color principal TREKAS (amarillo dorado) */
+  --primary-dark: #e5aa00;
+  /* Variante oscura del amarillo, usada en gradientes de botones */
+  --secondary: #5F4020;
+  --bg-color: #f4f6f8;
+  /* Fondo general de la app (#root) */
+  --surface: #ffffff;
+  /* Fondo de tarjetas (.card, .card-interactive) y header */
+  --text-main: #000000;
+  /* Color de texto principal (títulos, labels, body) */
+  --text-muted: #64748b;
+  /* Color de texto secundario/apagado (direcciones, subtítulos) */
+  --error: #ef4444;
+  /* Color de error (borde de inputs con error, texto de error) */
+  --border-radius: 12px;
+  /* Radio de borde global (botones, cards, inputs) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  /* Sombra suave (cards, header) */
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* Sombra media (btn-primary) */
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Sombra fuerte (#root, hover de botones) */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transición suave global */
+}
+
+/* ==========================================================================
+   RESET GLOBAL — Se aplica a TODOS los elementos HTML de la app.
+   Resetea márgenes, paddings y establece la fuente Gotham importada por Typekit.
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "gotham", sans-serif;
+}
+
+/* ==========================================================================
+   BODY — El <body> del HTML. Fondo oscuro azulado que se ve detrás del
+   contenedor de la app (en desktop). Centra el #root horizontalmente.
+   ========================================================================== */
+body {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   #root — Contenedor principal de React (div#root en index.html).
+   Simula una pantalla de celular: max 480px, fondo claro, centrado.
+   Todas las páginas (Login, Home, VerPedidos, etc.) viven dentro de este div.
+   ========================================================================== */
+#root {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* TEXTOS */
+h1 {
+  color: var(--text-main);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   .btn-primary — Botón principal amarillo pill (Botón 1).
+   COMPONENTE: BotonPrincipalUI.jsx (cuando outline=false)
+   USADO EN: Login.jsx ("INGRESAR"), Home.jsx ("NUEVO PEDIDO"),
+             SeleccionarLocalPaso1.jsx ("CONTINUAR"), SeleccionarProductoPaso2.jsx ("CONTINUAR"),
+             VerPedidos.jsx ("CONFIRMAR PEDIDO", "VOLVER")
+   ========================================================================== */
+.btn-primary {
+  width: 100%;
+  height: 52px;
+  background: var(--primary);
+  color: #1e293b;
+  border: none;
+  border-radius: 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: var(--transition);
+  box-shadow: none;
+  letter-spacing: 0.02em;
+}
+
+/* Efecto hover del btn-primary: sube 1px y sombra sutil (solo si no está deshabilitado) */
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(252, 188, 0, 0.35);
+  background: var(--primary-dark);
+}
+
+/* Efecto active del btn-primary: vuelve a posición original al hacer click */
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Estado deshabilitado del btn-primary — gris, sin cursor pointer.
+   USADO EN: SeleccionarLocalPaso1 (si no seleccionaste local),
+             SeleccionarProductoPaso2 (si carrito vacío) */
+.btn-primary:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   .btn-outline — Botón 2 (secundario). Fondo transparente, texto con color primario.
+   COMPONENTE: BotonPrincipalUI.jsx (cuando outline=true)
+   USADO EN: Login.jsx ("REGISTRARSE"), Home.jsx ("MI PERFIL",
+             "VER TODOS LOS LOCALES", "CERRAR SESIÓN")
+   ========================================================================== */
+.btn-outline {
+  background: transparent;
+  color: var(--text-main);
+  border: 2px solid #e2e8f0;
+  border-radius: 28px;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: none;
+}
+
+/* Hover del btn-outline (Botón 2): fondo gris muy sutil */
+.btn-outline:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   .input-group — Contenedor de cada campo de formulario (label + input + error).
+   COMPONENTE: InputUI.jsx
+   USADO EN: Login.jsx (campos Email y Contraseña),
+             SeleccionarLocalPaso1.jsx (buscador de locales),
+             SeleccionarProductoPaso2.jsx (buscador de productos),
+             TodosLosLocales.jsx (filtro de locales)
+   ========================================================================== */
+.input-group {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Label dentro del input-group — el texto que dice "Email", "Contraseña", etc.
+   COMPONENTE: InputUI.jsx (el <label>) */
+.input-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+/* El <input> dentro de input-group — campo de texto estilo underline.
+   Solo tiene borde inferior (línea), sin bordes laterales ni superior.
+   COMPONENTE: InputUI.jsx (el <input>) */
+.input-group input {
+  width: 100%;
+  height: 48px;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  font-size: 1rem;
+  background-color: transparent;
+  transition: var(--transition);
+}
+
+/* Estado focus del input — la línea inferior se vuelve amarilla TREKAS */
+.input-group input:focus {
+  outline: none;
+  border-bottom-color: var(--primary);
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* Estado de error del input — borde rojo cuando hay validación fallida.
+   COMPONENTE: InputUI.jsx (cuando se pasa prop error)
+   USADO EN: Login.jsx (error de contraseña) */
+.input-group input.error {
+  border-color: var(--error);
+}
+
+/* ==========================================================================
+   .error-text — Texto de error rojo debajo de un input.
+   COMPONENTE: InputUI.jsx (el <span> de error)
+   USADO EN: Login.jsx (mensaje de error bajo campo contraseña)
+   ========================================================================== */
+.error-text {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   .screen-container — Contenedor scrolleable de cada pantalla.
+   COMPONENTE: ScreenLayout.jsx (envuelve el {children} de cada página),
+               ContenedorAuthUI.jsx (pantalla de login),
+               SeleccionarLocalPaso1.jsx y SeleccionarProductoPaso2.jsx (contenido interno)
+   USADO EN: Home.jsx (directamente), y en todas las páginas que usan ScreenLayout
+   ========================================================================== */
+.screen-container {
+  padding: 24px;
+  flex: 1;
+  /* Ocupa TODO el espacio restante entre header y footer */
+  overflow-y: auto;
+  /* Solo esta zona hace scroll */
+  min-height: 0;
+  /* Fix para que el overflow funcione bien dentro de flex */
+}
+
+/* ==========================================================================
+   .header — Barra superior sticky con efecto glassmorphism (blur).
+   COMPONENTE: Header.jsx (el <header>)
+   USADO EN: Todas las páginas que usan ScreenLayout con title:
+             DetalleDeLocal, TodosLosLocales, HistorialDePedidos, VerPedidos,
+             SeleccionarLocalPaso1, SeleccionarProductoPaso2
+   ========================================================================== */
+.header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  /* No se achica nunca — se queda fijo arriba */
+}
+
+/* .header-logo — Logo de TREKAS centrado dentro del header.
+   COMPONENTE: Header.jsx (el <img> del logo negro.png)
+   Se muestra en todas las pantallas que usan ScreenLayout con title */
+.header-logo {
+  max-height: 130px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* .header-title — (Legacy) Texto del título, mantenido por compatibilidad.
+   COMPONENTE: Header.jsx — actualmente reemplazado por .header-logo */
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   .back-btn — Botón "VOLVER" dentro del header (esquina izquierda).
+   COMPONENTE: Header.jsx (el <button> que aparece cuando showBack=true)
+   USADO EN: Todas las páginas con ScreenLayout que tienen showBack
+   ========================================================================== */
+.back-btn {
+  position: absolute;
+  left: 16px;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 2.2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+/* Hover del back-btn: fondo gris sutil al pasar el mouse */
+.back-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Utility Classes & Design System
+   ========================================================================== */
+
+/* ---- LAYOUT UTILITIES ---- */
+
+/* .flex-col-full — Columna flex que ocupa el 100% de alto.
+   COMPONENTE: ScreenLayout.jsx (div raíz), ContenedorAuthUI.jsx,
+               SeleccionarLocalPaso1.jsx, SeleccionarProductoPaso2.jsx */
+.flex-col-full {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* Ocupa exactamente el alto de la pantalla */
+  overflow: hidden;
+  /* Evita que la caja entera haga scroll */
+}
+
+/* .justify-center — Centra verticalmente el contenido flex.
+   COMPONENTE: ContenedorAuthUI.jsx (centra el formulario de login verticalmente) */
+.justify-center {
+  justify-content: center;
+}
+
+/* .flex-center — Centra contenido en ambos ejes.
+   USADO EN: Actualmente disponible como utilidad general */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .flex-between — Distribuye hijos con espacio entre ellos.
+   USADO EN: CartaDeLocalUI.jsx (nombre + badge), CartaPedidoUI.jsx (nombre + status),
+             EstructuraCheckoutUI.jsx (TOTAL + precio), ItemCheckoutUI.jsx (producto + precio) */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .flex-around — Distribuye hijos con espacio alrededor.
+   USADO EN: DescripcionConductorUI.jsx (stats de horas y envíos) */
+.flex-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* .flex-row-gap — Fila flex con gap de 16px entre elementos.
+   USADO EN: SeleccionarProductoPaso2.jsx (botones +/- y cantidad) */
+.flex-row-gap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--surface);
+  border-radius: 30px;
+}
+
+/* ---- CARDS & CONTAINERS ---- */
+
+/* .card — Tarjeta blanca con sombra y borde sutil.
+   COMPONENTE: FormatoCartaUI.jsx (wrapper base de tarjetas)
+   USADO EN: VerPedidos.jsx (tarjetas "Destino" y "Productos"),
+             CartaPedidoUI.jsx (cada pedido en historial),
+             DescripcionConductorUI.jsx (info del conductor),
+             SeleccionarProductoPaso2.jsx (cada producto),
+             CartaLocalUI.jsx (detalle del local) */
+.card {
+  background: var(--primary);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+/* .card-interactive — Tarjeta clickeable con efecto hover.
+   COMPONENTE: CartaDeLocalUI.jsx
+   USADO EN: SeleccionarLocalPaso1.jsx (cada local para seleccionar),
+             TodosLosLocales.jsx (cada local en la lista) */
+.card-interactive {
+  background: var(--surface);
+  padding: 20px;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+/* Hover de card-interactive: sube y aumenta sombra */
+.card-interactive:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* .card-interactive.selected — Cuando un local está seleccionado (borde amarillo).
+   USADO EN: SeleccionarLocalPaso1.jsx (local actualmente seleccionado),
+             CartaDeLocalUI.jsx (cuando selected=true) */
+.card-interactive.selected {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(252, 188, 0, 0.2);
+  background-color: rgba(252, 188, 0, 0.02);
+}
+
+/* .card-padded — Padding extra para tarjetas que lo necesiten.
+   USADO EN: CartaLocalUI.jsx (detalle local), DescripcionConductorUI.jsx */
+.card-padded {
+  padding: 20px;
+}
+
+/* ---- BADGES & MICRO UI ---- */
+
+/* .badge — Etiqueta/pill pequeña con texto en negrita.
+   COMPONENTE: ColorDestaqueUI.jsx (el <span>)
+   USADO EN: CartaDeLocalUI.jsx (badge "SELECCIONADO" o "X PEDIDO(S)"),
+             CartaPedidoUI.jsx (badge de status "EN CAMINO" / "ENTREGADO") */
+.badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* .badge-sm — Versión más pequeña del badge (disponible como utilidad) */
+.badge-sm {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+}
+
+/* .badge-green — Badge verde para indicar locales con pedidos.
+   USADO EN: CartaDeLocalUI.jsx (badge "X PEDIDO(S)" cuando tiene pedidos) */
+.badge-green {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* .badge-orange — Badge naranja/amarillo para estados activos.
+   USADO EN: CartaDeLocalUI.jsx (badge "SELECCIONADO"),
+             CartaPedidoUI.jsx (status "ENTREGADO") */
+.badge-orange {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+/* .badge-blue — Badge azul para estados en tránsito.
+   USADO EN: CartaPedidoUI.jsx (status "EN CAMINO") */
+.badge-blue {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+/* ---- SPECIFIC BUTTONS ---- */
+
+/* .btn-stepper — Botones cuadrados +/- para cambiar cantidad de producto.
+   USADO EN: SeleccionarProductoPaso2.jsx (botones para sumar/restar cantidad) */
+.btn-stepper {
+  width: 40px;
+  height: 40px;
+  background: none;
+  color: black;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .footer-action — Barra inferior fija con botón de acción principal.
+   USADO EN: SeleccionarLocalPaso1.jsx (botón "CONTINUAR"),
+             SeleccionarProductoPaso2.jsx (botón "CONTINUAR"),
+             VerPedidos.jsx (botón "CONFIRMAR PEDIDO") */
+.footer-action {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #ccc;
+  flex-shrink: 0;
+  /* No se achica nunca — se queda fijo abajo */
+}
+
+/* ---- TYPOGRAPHY UTILITIES ---- */
+
+/* .text-primary — Texto en color amarillo TREKAS.
+   USADO EN: FormatoCartaUI.jsx (títulos de tarjetas como "Destino", "Productos"),
+             CartaLocalUI.jsx (título del local), HeaderAuthUI.jsx (título "TREKAS Delivery"),
+             EstructuraCheckoutUI.jsx (precio total),
+             SeleccionarProductoPaso2.jsx (precio del producto) */
+.text-primary {
+  color: var(--secondary);
+}
+
+/* .text-muted — Texto gris apagado para info secundaria.
+   USADO EN: CartaDeLocalUI.jsx (dirección), CartaPedidoUI.jsx (fecha y total),
+             DescripcionConductorUI.jsx (labels "Horas Trabajadas", "Envíos"),
+             VerPedidos.jsx (dirección del local), ItemCheckoutUI.jsx (cant x precio),
+             DetalleDeLocal.jsx y TodosLosLocales.jsx (mensaje vacío),
+             SeleccionarLocalPaso1/Paso2 (mensaje "No se encontraron...") */
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* .text-main — Texto en color principal oscuro (disponible como utilidad) */
+.text-main {
+  color: var(--text-main);
+}
+
+/* .text-bold — Texto en negrita.
+   USADO EN: CartaDeLocalUI.jsx (precio), CartaPedidoUI.jsx (cantidad),
+             DescripcionConductorUI.jsx (números), VerPedidos.jsx (nombre local),
+             ItemCheckoutUI.jsx (nombre y subtotal del producto),
+             SeleccionarProductoPaso2.jsx (precio y cantidad) */
+.text-bold {
+  font-weight: bold;
+}
+
+/* .text-center — Texto centrado.
+   USADO EN: HeaderAuthUI.jsx (título y subtítulo login),
+             DescripcionConductorUI.jsx, CartaLocalUI.jsx (fallback),
+             VerPedidos.jsx (carrito vacío), DetalleDeLocal.jsx y TodosLosLocales.jsx (vacío),
+             SeleccionarLocalPaso1/Paso2 ("No se encontraron...") */
+.text-center {
+  text-align: center;
+}
+
+/* .text-sm — Texto un poco más pequeño (0.9rem).
+   USADO EN: CartaDeLocalUI.jsx (dirección), CartaPedidoUI.jsx (fecha/total),
+             ItemCheckoutUI.jsx (cantidad x precio) */
+.text-sm {
+  font-size: 0.9rem;
+}
+
+/* .text-xs — Texto muy pequeño (0.8rem).
+   USADO EN: DescripcionConductorUI.jsx (labels de stats) */
+.text-xs {
+  font-size: 0.8rem;
+}
+
+/* .text-xs-bold — Texto muy pequeño y en negrita.
+   USADO EN: CartaDeLocalUI.jsx ("ÚLTIMOS PEDIDOS:"),
+             CartaPedidoUI.jsx ("ÍTEMS PEDIDOS:") */
+.text-xs-bold {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* .text-lg — Texto un poco más grande (1.1rem).
+   USADO EN: DetalleDeLocal.jsx (título de sección), VerPedidos.jsx (nombre del local) */
+.text-lg {
+  font-size: 1.1rem;
+}
+
+/* .text-xl — Texto grande (1.2rem).
+   USADO EN: TitulosDeSeccionUI.jsx (títulos de sección por defecto),
+             SeleccionarProductoPaso2.jsx (número de cantidad) */
+.text-xl {
+  font-size: 1.2rem;
+}
+
+/* .text-xxl — Texto extra grande (1.5rem).
+   USADO EN: DescripcionConductorUI.jsx (números grandes de stats),
+             EstructuraCheckoutUI.jsx (texto "TOTAL" y precio) */
+.text-xxl {
+  font-size: 1.5rem;
+}
+
+/* ---- MARGIN UTILITIES ---- */
+
+/* .m-0 — Sin márgenes. Usado para resetear márgenes de <h3>, <p>, etc.
+   USADO EN: CartaDeLocalUI.jsx, CartaPedidoUI.jsx, CartaLocalUI.jsx,
+             DescripcionConductorUI.jsx, SeleccionarProductoPaso2.jsx */
+.m-0 {
+  margin: 0;
+}
+
+/* .mb-1 — margin-bottom 8px.
+   USADO EN: CartaPedidoUI.jsx (entre título y fecha), CartaDeLocalUI.jsx,
+             CartaLocalUI.jsx (título), HeaderAuthUI.jsx (título) */
+.mb-1 {
+  margin-bottom: 8px;
+}
+
+/* .mb-2 — margin-bottom 12px.
+   USADO EN: CartaPedidoUI.jsx (entre fecha y items), ItemCheckoutUI.jsx,
+             SeleccionarProductoPaso2.jsx (entre cards de producto) */
+.mb-2 {
+  margin-bottom: 12px;
+}
+
+/* .mb-3 — margin-bottom 16px.
+   USADO EN: TitulosDeSeccionUI.jsx (por defecto), FormatoCartaUI.jsx (título),
+             DetalleDeLocal.jsx (título de sección) */
+.mb-3 {
+  margin-bottom: 16px;
+}
+
+/* .mb-4 — margin-bottom 24px.
+   USADO EN: Home.jsx (saludo, mapa), Login.jsx (espacio antes de botones),
+             FormatoCartaUI.jsx (entre tarjetas), DescripcionConductorUI.jsx */
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+/* .mb-5 — margin-bottom 32px.
+   USADO EN: HeaderAuthUI.jsx (espacio entre subtítulo y formulario) */
+.mb-5 {
+  margin-bottom: 32px;
+}
+
+/* .mt-2 — margin-top 12px.
+   USADO EN: CartaDeLocalUI.jsx (dirección, sección de últimos pedidos) */
+.mt-2 {
+  margin-top: 12px;
+}
+
+/* .mt-3 — margin-top 16px.
+   USADO EN: TodosLosLocales.jsx (lista de locales después del buscador),
+             EstructuraCheckoutUI.jsx (separador antes del total) */
+.mt-3 {
+  margin-top: 16px;
+}
+
+/* .mt-4 — margin-top 24px.
+   USADO EN: DetalleDeLocal.jsx (mensaje vacío), TodosLosLocales.jsx (mensaje vacío) */
+.mt-4 {
+  margin-top: 24px;
+}
+
+/* ==========================================================================
+   COMPONENTES ESPECÍFICOS
+   ========================================================================== */
+
+/* .map-placeholder — Placeholder gris para el mapa de zona (todavía no implementado).
+   USADO EN: Home.jsx (recuadro "[ MAPA ZONA ]") */
+.map-placeholder {
+  height: 150px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .stats-container — Contenedor de estadísticas del conductor con texto centrado.
+   USADO EN: DescripcionConductorUI.jsx (envuelve las stats de horas y envíos) */
+.stats-container {
+  text-align: center;
+}
+
+/* .stat-divider — Línea vertical separadora entre las stats del conductor.
+   USADO EN: DescripcionConductorUI.jsx (entre "Horas Trabajadas" y "Envíos Realizados") */
+.stat-divider {
+  width: 1px;
+  background: #eee;
+}
+
+/* .pedido-items-list — Contenedor con fondo gris claro para la lista de ítems de un pedido.
+   USADO EN: CartaPedidoUI.jsx (la sección "ÍTEMS PEDIDOS" dentro de cada tarjeta de pedido) */
+.pedido-items-list {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+/* .item-row — Fila de un ítem individual (nombre a la izquierda, dato a la derecha).
+   USADO EN: CartaPedidoUI.jsx (cada ítem: nombre + cantidad),
+             CartaDeLocalUI.jsx (últimos pedidos: fecha + total) */
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}

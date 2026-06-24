@@ -31,7 +31,14 @@ function App() {
   const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito(user, localSeleccionado);
 
   const [locales, setLocales] = useState([]);
+<<<<<<< Updated upstream
 
+=======
+//Toma los locales de la API, el programa actualmente no tiene como cargar
+//Items en la API de Locales
+  // Utilizamos user?.id o user?.email como dependencia para evitar que se vuelva
+  // a ejecutar este efecto cuando el objeto user cambia debido a un cambio de nombre
+>>>>>>> Stashed changes
   useEffect(() => {
     if (user) {
       apiFetch("/api/locales")
@@ -48,7 +55,8 @@ function App() {
     } else {
       setLocales([]);
     }
-  }, [user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!user]);
 
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
   const { historialDeOrdenes, confirmarOrden } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
