@@ -5,15 +5,19 @@ import { FormatoCartaUI } from '../../../components/ui/FormatoCartaUI';
 import { ItemCheckoutUI } from '../../../components/ui/ItemCheckoutUI';
 import { EstructuraCheckoutUI } from '../../../components/ui/EstructuraCheckoutUI';
 import { usarResumenDePedidos } from './usarResumenDePedidos';
+import { hookLocacion } from '../../../hooks/hookLocacion';
+import { usarCarrito } from '../../../hooks/usarCarrito';
 
 // Esta es la pagina donde vemos el resumen del pedido
 // Le manda los props que recibe de App.jsx a usarResumenDePedidos que procesa la info
-export const VerPedidos = ({ carrito, total, localSeleccionado, confirmarOrden }) => {
+export const VerPedidos = ({ user, confirmarOrden }) => {
+  const { localSeleccionado, establecerLocacion } = hookLocacion();
+  const { carrito, total, limpiarCarrito } = usarCarrito(user, localSeleccionado);
   const {
     isEmpty,
     confirmadorDePedidos,
     irAtrasResumenDePedidos,
-  } = usarResumenDePedidos({ confirmarOrden, carrito, localSeleccionado });
+  } = usarResumenDePedidos({ confirmarOrden, carrito, localSeleccionado, total, limpiarCarrito, establecerLocacion });
 
   // Handle de que pasa si el carrito esta vacio, en teoria no deberia pasar porque no podes avanzar a esta pagina con el carrito vacio
   if (isEmpty) {

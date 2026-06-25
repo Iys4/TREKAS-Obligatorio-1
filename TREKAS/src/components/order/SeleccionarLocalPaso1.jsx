@@ -21,7 +21,7 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
 //establecerLocacion es el componente que guarda el location en la memoria
 //onNext, cuando se apreta CONTINUAR sube el step en NewOrder.jsx
 
-export const SeleccionarLocalPaso1 = ({ locales = [], localSeleccionado, establecerLocacion, onNext }) => {
+export const SeleccionarLocalPaso1 = ({ locales = [], localSeleccionado, establecerLocacion, onNext, cargando }) => {
   const [search, actualizarInput] = useState('');
   const [coords, setCoords] = useState(null);
 
@@ -90,19 +90,25 @@ export const SeleccionarLocalPaso1 = ({ locales = [], localSeleccionado, estable
         />
 
         {/* Recorre toda la lista basada en localesConDistancia y los carga dinámicamente */}
-        {localesConDistancia.map(l => (
-          <CartaDeLocalUI
-            key={l.id}
-            location={l}
-            selected={localSeleccionado?.id === l.id}
-            isClosest={l.id === closestLocalId}
-            onClick={() => establecerLocacion(l)}
-          />
-        ))}
+        {cargando ? (
+          <p className="text-center text-muted">Cargando locales...</p>
+        ) : (
+          <>
+            {localesConDistancia.map(l => (
+              <CartaDeLocalUI
+                key={l.id}
+                location={l}
+                selected={localSeleccionado?.id === l.id}
+                isClosest={l.id === closestLocalId}
+                onClick={() => establecerLocacion(l)}
+              />
+            ))}
 
-        {/* Si no se encontró ningún location muestra esto */}
-        {localesConDistancia.length === 0 && (
-          <p className="text-center text-muted">No se encontraron locales.</p>
+            {/* Si no se encontró ningún location muestra esto */}
+            {localesConDistancia.length === 0 && (
+              <p className="text-center text-muted">No se encontraron locales.</p>
+            )}
+          </>
         )}
       </div>
 

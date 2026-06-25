@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { enviarAuth } from './hooks/enviarAuth';
-import { usarCarrito } from './hooks/usarCarrito';
-import { hookLocacion } from './hooks/hookLocacion';
 import { usarPedidosNuevos } from './hooks/usarPedidosNuevos';
-import { apiFetch } from './services/api';
 
 // Importamos las paginas acá
 import { Login } from './pages/auth/Login/Login';
@@ -36,41 +33,9 @@ function App() {
     updateUserName
   } = enviarAuth();
 
-  // Hook de la ubicacion, guarda a que local vamos a entregar en la pantalla de agregar pedido
-  //Empieza valiendo null
-  //
-  const { localSeleccionado, establecerLocacion } = hookLocacion();
-
-  // Hook del carrito, agrega y borra items del carrito usando los otros el hook de usarPedidosNuevos, con memoria!
-  const { carrito, agregarItem, limpiarCarrito, total } = usarCarrito(user, localSeleccionado);
-
-  const [locales, setLocales] = useState([]);
-//Toma los locales de la API, el programa actualmente no tiene como cargar
-//Items en la API de Locales
-  useEffect(() => {
-    if (user) {
-      apiFetch("/api/locales")
-        .then(res => {
-          const fetched = (res.items || []).map(item => ({
-            id: item.data?.id || item.id,
-            name: item.data?.name || item.data?.nombre || '',
-            address: item.data?.address || item.data?.direccion || '',
-            coordenadas: item.data?.coordenadas || [],
-          }));
-          setLocales(fetched);
-        })
-        .catch(err => console.error("Error fetching locales:", err));
-    } else {
-      setLocales([]);
-    }
-  }, [user]);
-
   // Hook de pedidos, crea nuevos pedidos y los guarda en el historial del tipo del delivery
-  const { historialDeOrdenes, confirmarOrden, marcarEntregado } = usarPedidosNuevos({ user, carrito, localSeleccionado, total, limpiarCarrito });
-
-  // Filtramos los pedidos activos (activo === true) para pasarlos al mapa en Home
-  // Asi los pedidos nuevos confirmados tambien aparecen automaticamente en el mapa
-  const pedidosActivos = historialDeOrdenes.filter(p => p.activo === true);
+  //VER SI SE PUEDE ARREGLAR
+  const { historialDeOrdenes, confirmarOrden, marcarEntregado } = usarPedidosNuevos({ user });
 
   return (
     //Usamos el BrowserRouter para simplificar la forma en la que asignan los props a los componentes, es la que establece que prop se envia a que ruta.
@@ -88,16 +53,12 @@ function App() {
         <Route path="/"
           element={<PrivateRoute
             user={user}>
-            <Home user={user} logout={logout} pedidosActivos={pedidosActivos} locales={locales} />
+            <Home user={user} logout={logout} historialDeOrdenes={historialDeOrdenes} />
           </PrivateRoute>} />
         {/* Ruta para armar un nuevo pedido, le pasamos los props para que envie el local seleccionado a hookLocacion*/}
         <Route path="/pedido/new" element={
           <PrivateRoute user={user}>
-            <ElectorDeMenuNuevoPedido localSeleccionado={localSeleccionado}
-              establecerLocacion={establecerLocacion}
-              carrito={carrito}
-              agregarItem={agregarItem}
-              locales={locales} />
+            <ElectorDeMenuNuevoPedido user={user} />
           </PrivateRoute>
         } />
         {/* Resumen del pedido tomando los items que estan en la memoria, desde acá se envia usarPedidosNuevos y confirmar pedido*/}
@@ -105,9 +66,7 @@ function App() {
           <PrivateRoute user={user}>
 
             <VerPedidos
-              carrito={carrito}
-              total={total}
-              localSeleccionado={localSeleccionado}
+              user={user}
               confirmarOrden={confirmarOrden} />
           </PrivateRoute>
         } />
@@ -126,7 +85,7 @@ function App() {
           <PrivateRoute user={user}>
             <TodosLosLocales
               historialDeOrdenes={historialDeOrdenes}
-              locales={locales}
+              user={user}
               marcarEntregado={marcarEntregado} />
           </PrivateRoute>
         } />
@@ -136,7 +95,7 @@ function App() {
           <PrivateRoute user={user}>
             <DetalleDeLocal
               historialDeOrdenes={historialDeOrdenes}
-              locales={locales}
+              user={user}
               marcarEntregado={marcarEntregado} />
           </PrivateRoute>
         } />

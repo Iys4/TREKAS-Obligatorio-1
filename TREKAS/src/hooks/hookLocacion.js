@@ -1,10 +1,31 @@
 import { useState } from 'react';
 
 // Hook que maneja el local donde se va a entregar el pedido
-//Recibe la informacion del menu de seleccion de local y lo guarda en la memomoria para que se use mas adelante cuando aceptes enviar el pedido.
-//Usamos un hook permanente porque el usuario puede moverse para atras y para adelante entre pantallas sin perder los datos
+// Guarda la información en sessionStorage para persistir el local seleccionado
+// entre transiciones de pantallas y recargas.
 export const hookLocacion = () => {
-  const [localSeleccionado, establecerLocacion] = useState(null);
+  const [localSeleccionado, setLocal] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('localSeleccionado');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      console.error("Error reading localSeleccionado from sessionStorage:", e);
+      return null;
+    }
+  });
+
+  const establecerLocacion = (local) => {
+    setLocal(local);
+    try {
+      if (local) {
+        sessionStorage.setItem('localSeleccionado', JSON.stringify(local));
+      } else {
+        sessionStorage.removeItem('localSeleccionado');
+      }
+    } catch (e) {
+      console.error("Error saving localSeleccionado to sessionStorage:", e);
+    }
+  };
 
   return {
     localSeleccionado,

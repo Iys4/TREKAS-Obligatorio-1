@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionado }) => {
+export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionado, total, limpiarCarrito, establecerLocacion }) => {
   const nav = useNavigate();
 
   // Le envia esto a VerPedidos para que sepa rapidamente si el carrito esta vacio o se deselecciono la locacion, es para casos fringe
@@ -10,7 +10,10 @@ export const usarResumenDePedidos = ({ confirmarOrden, carrito, localSeleccionad
   const confirmadorDePedidos = async () => {
     if (confirmarOrden) {
       try {
-        await confirmarOrden();
+        await confirmarOrden({ carrito, localSeleccionado, total, limpiarCarrito });
+        if (establecerLocacion) {
+          establecerLocacion(null);
+        }
         nav('/');
       } catch (error) {
         alert("Error al confirmar el pedido: " + error.message);

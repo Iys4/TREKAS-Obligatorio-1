@@ -9,7 +9,7 @@ import { marcarPedidoEntregado } from '../services/orders';
  * Este nombre es una restricción del backend y no refleja la
  * semántica de la app (son PEDIDOS de entrega, no compras).
  */
-export const usarPedidosNuevos = ({ user, carrito, localSeleccionado, total, limpiarCarrito }) => {
+export const usarPedidosNuevos = ({ user }) => {
   const [historialDeOrdenes, cambiarHistorialDeOrdenes] = useState([]);
 
   const cargarPedidos = async () => {
@@ -68,7 +68,7 @@ export const usarPedidosNuevos = ({ user, carrito, localSeleccionado, total, lim
   }, [user]);
 
   // Crea un nuevo pedido con los datos actuales y lo agrega al historial
-  const confirmarOrden = async () => {
+  const confirmarOrden = async ({ carrito = [], localSeleccionado = null, total = 0, limpiarCarrito = () => {} } = {}) => {
     if (!localSeleccionado || carrito.length === 0) return;
 
     try {
