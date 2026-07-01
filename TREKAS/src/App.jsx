@@ -12,6 +12,7 @@ import { DetalleDeLocal } from './pages/main/DetalleDeLocal/DetalleDeLocal';
 import { ElectorDeMenuNuevoPedido } from './pages/order/ElectorDeMenuNuevoPedido/ElectorDeMenuNuevoPedido';
 import { VerPedidos } from './pages/order/VerPedidos/VerPedidos';
 import { HistorialDePedidos } from './pages/order/HistorialDePedidos/HistorialDePedidos';
+import { NotFound } from './pages/main/NotFound/NotFound';
 
 // Esta linea se fija si el user tiene hijos, si no tiene hijos es porque user esta vacio, entonces te manda a la pagina de login
 //Solo se activa esta linea si la ruta es privada y uno quiere entrar al URL sin tener una cuenta iniciada
@@ -99,7 +100,7 @@ function App() {
               marcarEntregado={marcarEntregado} />
           </PrivateRoute>
         } />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

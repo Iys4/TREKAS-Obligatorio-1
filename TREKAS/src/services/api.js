@@ -37,9 +37,11 @@ export const apiFetch = async (path, options = {}) => {
 
   // If the response is not OK, log details and handle unauthorized token
 if (!response.ok) {
-  // Clear token on 401 to force re‑login
+  // Clear token and user on 401 to force re‑login
   if (response.status === 401) {
     removeToken();
+    localStorage.removeItem("user");
+    window.location.href = "/login";
   }
   // Log status and any error message returned by the API for debugging
   console.error('API error', response.status, data?.error || text);

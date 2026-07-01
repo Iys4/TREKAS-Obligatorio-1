@@ -45,7 +45,8 @@ export const usarPedidosNuevos = ({ user }) => {
           emailConductor: item.data?.emailConductor || item.datosCheckout?.email || 'repartir@gmail.com',
           items: (item.items || []).map(i => ({
             name: i.data?.nombre || i.data?.name || 'Producto',
-            cantidad: i.cantidad
+            cantidad: Number(i.cantidad || 0),
+            precio: Number(i.data?.precio || 0)
           }))
         };
       });
@@ -121,7 +122,8 @@ export const usarPedidosNuevos = ({ user }) => {
         emailConductor: body.data.emailConductor,
         items: body.items.map(i => ({
           name: i.data.nombre,
-          cantidad: i.cantidad
+          cantidad: i.cantidad,
+          precio: Number(i.data.precio || 0)
         }))
       };
 

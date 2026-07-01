@@ -82,12 +82,25 @@ export const CartaPedidoUI = ({ pedido, onConfirmarEntrega }) => {
           <p className="text-xs-bold mb-1" style={{ color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Productos
           </p>
-          {pedido.items.map((item, idx) => (
-            <div key={idx} className="item-row">
-              <span style={{ fontWeight: 500 }}>{item.name}</span>
-              <span className="text-bold" style={{ color: 'var(--text-main)' }}>×{item.cantidad}</span>
-            </div>
-          ))}
+          {pedido.items.map((item, idx) => {
+            const tienePrecio = item.precio && item.precio > 0;
+            const subtotal = tienePrecio ? item.precio * item.cantidad : null;
+            return (
+              <div key={idx} className="item-row">
+                <span style={{ fontWeight: 500 }}>
+                  {item.name}
+                  {tienePrecio && (
+                    <span className="text-xs text-muted" style={{ marginLeft: '6px', fontWeight: 400, fontSize: '0.75rem' }}>
+                      (${item.precio} c/u)
+                    </span>
+                  )}
+                </span>
+                <span className="text-bold" style={{ color: 'var(--text-main)' }}>
+                  ×{item.cantidad} {tienePrecio && `($${subtotal})`}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
         {/* ── Fila inferior: metadatos + botón de entrega ── */}

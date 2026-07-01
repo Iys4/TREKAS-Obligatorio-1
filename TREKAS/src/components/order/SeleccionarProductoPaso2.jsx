@@ -18,6 +18,58 @@ const resolverImagen = (nombre, apiImagen) => {
   return apiImagen; // En caso de que no coincida, utiliza la URL
 };
 
+const StepperInput = ({ quantity, onChange }) => {
+  const [localVal, setLocalVal] = useState(quantity.toString());
+
+  useEffect(() => {
+    setLocalVal(quantity.toString());
+  }, [quantity]);
+
+  const handleChange = (e) => {
+    const val = e.target.value;
+    if (/^\d*$/.test(val)) {
+      setLocalVal(val);
+      const parsed = parseInt(val, 10);
+      if (!isNaN(parsed)) {
+        onChange(parsed);
+      } else if (val === '') {
+        onChange(0);
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    if (localVal === '') {
+      setLocalVal('0');
+      onChange(0);
+    }
+  };
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={localVal}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={(e) => e.target.select()}
+      style={{
+        width: '50px',
+        height: '32px',
+        border: '1px solid var(--border, #ccc)',
+        borderRadius: '6px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '1.05rem',
+        outline: 'none',
+        background: 'var(--background, #fff)',
+        color: 'var(--text-main, #000)',
+      }}
+    />
+  );
+};
+
 //Este componente es donde ingresamos los items que queremos pedir.
 
 //carrito, es el carrito que toma de la memoria
@@ -118,9 +170,9 @@ export const SeleccionarProductoPaso2 = ({ carrito, agregarItem, onNext, onBack 
             <div>
               <h3 className="m-0">{p.name}</h3><p className="text-primary text-bold m-0">${p.precio}</p>
             </div>
-            <div className="flex-row-gap">
+            <div className="flex-row-gap" style={{ alignItems: 'center' }}>
               <button className="btn-stepper" onClick={() => getQ(p.id) > 0 && agregarItem(p, getQ(p.id) - 1)}>-</button>
-              <span className="text-xl text-bold">{getQ(p.id)}</span>
+              <StepperInput quantity={getQ(p.id)} onChange={(q) => agregarItem(p, q)} />
               <button className="btn-stepper" onClick={() => agregarItem(p, getQ(p.id) + 1)}>+</button>
             </div>
           </div>
